@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://revoup.ru/api/loans/v1/sessions
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Connection:
+      - close
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Status:
+      - 500 Internal Server Error
+      X-Frame-Options:
+      - ALLOWALL
+      X-Request-Id:
+      - 00cdc245-91bb-42f4-8763-da721b80f7eb
+      - 233d60217f429fd0bafc33fb6c56c51b
+      X-Runtime:
+      - '0.483222'
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: |
+        <!DOCTYPE html>
+        <html lang='en'></html>
+        <head>
+        <meta charset='UTF-8' content='width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0' name='viewport'>
+        <title>
+        Ошибка
+        </title>
+        <link rel="stylesheet" media="all" href="/assets/errors/errors-90a8e50cb7808b39777e58495b6d13f60caa4dad163f270042946be44be83c3e.css" />
+        <meta name="csrf-param" content="authenticity_token" />
+        <meta name="csrf-token" content="u5p3kfSO9lqpU9sNxxMHcTs0L7bIy//3nCL58pXXqoLPrdZLsZE5BNHbL0PtwE2ErVCZzBy2FJMeMqFfzFx7zQ==" />
+        </head>
+        <body>
+        <section class='sectionLogin sectionError sectionError--500'>
+        <div class='contentIn'>
+        <div class='titleMain'>
+        <span class='iconError iconError--500'></span>
+        <span class='titleMain__info'>
+        Сервис<br>временно недоступен.
+        </span>
+        </div>
+        <div class='subtitleMain'>
+        В данный момент мы не можем<br>выполнить ваш запрос.
+        </div>
+        </div>
+        </section>
+
+        </body>
+    http_version: 
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0

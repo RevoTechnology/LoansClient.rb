@@ -28,16 +28,10 @@ class Revo::LoansApi::Client
     end
   end
 
-  def create_loan_request(amount:, mobile_phone:, store_id:)
-    loan_request_params = {
-      loan_request: {
-        mobile_phone: mobile_phone,
-        amount: amount,
-        store_id: store_id
-      }
-    }
-    response = make_request(:post, 'loan_requests', loan_request_params)
+  def create_loan_request(options)
+    response = make_request(:post, 'loan_requests', loan_request_params(options))
     return response unless response.success?
+
     @loan_request_token = response.response.dig(:loan_request, :token)
     Result.new(
       success?: true,
@@ -45,6 +39,18 @@ class Revo::LoansApi::Client
         token: loan_request_token,
         terms: loan_request_terms.response[:loan_request]
       }
+    )
+  end
+
+  def update_loan_request(token:, options:)
+    update_params = { loan_request: options }
+    response = make_request(:put, "loan_requests/#{token}", update_params)
+
+    return response unless response.success?
+
+    Result.new(
+      success?: true,
+      response: {}
     )
   end
 
@@ -67,6 +73,35 @@ class Revo::LoansApi::Client
 
   def finalize_loan(token:, code:)
     make_request(:post, "loan_requests/#{token}/loan/finalization", loan: { agree_processing: '1', confirmation_code: code })
+  end
+
+  # returns
+  def orders(store_id:, filters: {})
+    make_request(:get, 'orders', store_id: store_id, filters: filters)
+  end
+
+  def send_return_confirmation_code(order_id:)
+    make_request(:post, "orders/#{order_id}/send_return_confirmation_code")
+  end
+
+  def create_return(order_id:, code:, amount:, store_id:)
+    params = {
+      return: {
+        order_id: order_id,
+        confirmation_code: code,
+        amount: amount,
+        store_id: store_id
+      }
+    }
+    make_request(:post, 'returns', params)
+  end
+
+  def confirm_return(return_id:)
+    make_request(:post, "returns/#{return_id}/confirm")
+  end
+
+  def cancel_return(return_id:)
+    make_request(:post, "returns/#{return_id}/cancel")
   end
 
   private
@@ -123,5 +158,9 @@ class Revo::LoansApi::Client
 
   def url_for(endpoint)
     [base_url, endpoint].join('/')
+  end
+
+  def loan_request_params(options)
+    { loan_request: options }
   end
 end

@@ -3,6 +3,11 @@ require 'revo/loans_api'
 
 RSpec.configure do |config|
   require 'webmock/rspec'
+  require 'vcr'
+  VCR.configure do |config|
+    config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+    config.hook_into :webmock
+  end
 
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'

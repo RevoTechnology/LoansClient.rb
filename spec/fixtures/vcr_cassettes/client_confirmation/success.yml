@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://revoup.ru/api/loans/v1/loan_requests/some-lr-token/client/confirmation
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Authorization:
+      - some-session-token
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - text/html
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Frame-Options:
+      - ALLOWALL
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 7754944725cda5dc61551e99b03aeaae
+      - 8c92b2c8-714b-4fb8-a1e2-a938deae6f3a
+      X-Runtime:
+      - '0.195590'
+      Vary:
+      - Origin
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    http_version: 
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0

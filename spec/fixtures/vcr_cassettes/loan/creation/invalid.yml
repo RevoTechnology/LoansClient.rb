@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://revoup.ru/api/loans/v1/loan_requests/some-lr-token/loan
+    body:
+      encoding: UTF-8
+      string: '{"term_id":51}'
+    headers:
+      Authorization:
+      - some-session-token
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 422 Unprocessable Entity
+      X-Frame-Options:
+      - ALLOWALL
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 3ec8c852-b1d8-4c5f-bb5a-085fff9adac2
+      - b38b28b6664ea8a4f3b6f9c0aa33a835
+      X-Runtime:
+      - '0.237016'
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: '{"errors":{"base":["К сожалению, ваша заявка отклонена"]}}'
+    http_version: 
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0

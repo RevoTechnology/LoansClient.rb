@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://revoup.ru/api/loans/v1/loan_requests/some-lr-token/loan/finalization
+    body:
+      encoding: UTF-8
+      string: '{"loan":{"agree_processing":"1","confirmation_code":"1111"}}'
+    headers:
+      Authorization:
+      - some-session-token
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Frame-Options:
+      - ALLOWALL
+      Etag:
+      - W/"1038168ad0ba029826bc1d0c87095f11"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 13d5c74d-5d02-404d-bd55-dc345c8d964f
+      - 808557500e80d0df7228ac640ee6fb13
+      X-Runtime:
+      - '0.405529'
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: '{"offer_id":"244244102","loan_application":{"barcodes":{"image":"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjIwcHgiIGhlaWdodD0iMTIwcHgiIHZpZXdCb3g9IjAgMCAyMjAgMTIwIiB2ZXJzaW9uPSIxLjEiPgo8dGl0bGU+MVpaMDYwMDAyMzAzMDAwMjQ0MjQ0MTAyNzwvdGl0bGU+CjxnIGlkPSJjYW52YXMiID4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjIyMHB4IiBoZWlnaHQ9IjEyMHB4IiBmaWxsPSJ3aGl0ZSIgLz4KPGcgaWQ9ImJhcmNvZGUiIGZpbGw9ImJsYWNrIj4KPHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMyIgeT0iMTAiIHdpZHRoPSIxcHgiIGhlaWdodD0iMTAwcHgiIC8+CjxyZWN0IHg9IjE2IiB5PSIxMCIgd2lkdGg9IjFweCIgaGVpZ2h0PSIxMDBweCIgLz4KPHJlY3QgeD0iMjEiIHk9IjEwIiB3aWR0aD0iMXB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIyNCIgeT0iMTAiIHdpZHRoPSIzcHgiIGhlaWdodD0iMTAwcHgiIC8+CjxyZWN0IHg9IjI5IiB5PSIxMCIgd2lkdGg9IjJweCIgaGVpZ2h0PSIxMDBweCIgLz4KPHJlY3QgeD0iMzIiIHk9IjEwIiB3aWR0aD0iM3B4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIzNiIgeT0iMTAiIHdpZHRoPSIycHgiIGhlaWdodD0iMTAwcHgiIC8+CjxyZWN0IHg9IjQxIiB5PSIxMCIgd2lkdGg9IjFweCIgaGVpZ2h0PSIxMDBweCIgLz4KPHJlY3QgeD0iNDMiIHk9IjEwIiB3aWR0aD0iM3B4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSI0NyIgeT0iMTAiIHdpZHRoPSIycHgiIGhlaWdodD0iMTAwcHgiIC8+CjxyZWN0IHg9IjUyIiB5PSIxMCIgd2lkdGg9IjFweCIgaGVpZ2h0PSIxMDBweCIgLz4KPHJlY3QgeD0iNTQiIHk9IjEwIiB3aWR0aD0iMXB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSI1NiIgeT0iMTAiIHdpZHRoPSIzcHgiIGhlaWdodD0iMTAwcHgiIC8+CjxyZWN0IHg9IjYwIiB5PSIxMCIgd2lkdGg9IjRweCIgaGVpZ2h0PSIxMDBweCIgLz4KPHJlY3QgeD0iNjUiIHk9IjEwIiB3aWR0aD0iMXB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSI2OCIgeT0iMTAiIHdpZHRoPSIycHgiIGhlaWdodD0iMTAwcHgiIC8+CjxyZWN0IHg9IjcyIiB5PSIxMCIgd2lkdGg9IjFweCIgaGVpZ2h0PSIxMDBweCIgLz4KPHJlY3QgeD0iNzYiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSI3OSIgeT0iMTAiIHdpZHRoPSIycHgiIGhlaWdodD0iMTAwcHgiIC8+CjxyZWN0IHg9IjgzIiB5PSIxMCIgd2lkdGg9IjJweCIgaGVpZ2h0PSIxMDBweCIgLz4KPHJlY3QgeD0iODciIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSI5MSIgeT0iMTAiIHdpZHRoPSIycHgiIGhlaWdodD0iMTAwcHgiIC8+CjxyZWN0IHg9Ijk1IiB5PSIxMCIgd2lkdGg9IjJweCIgaGVpZ2h0PSIxMDBweCIgLz4KPHJlY3QgeD0iOTgiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMDEiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMDQiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMDkiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMTIiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMTUiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMjAiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMjMiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMjciIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMzEiIHk9IjEwIiB3aWR0aD0iM3B4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMzUiIHk9IjEwIiB3aWR0aD0iMXB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxMzgiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNDIiIHk9IjEwIiB3aWR0aD0iMXB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNDQiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNDciIHk9IjEwIiB3aWR0aD0iM3B4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNTMiIHk9IjEwIiB3aWR0aD0iMXB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNTciIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNjAiIHk9IjEwIiB3aWR0aD0iM3B4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNjQiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNjgiIHk9IjEwIiB3aWR0aD0iMXB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNzIiIHk9IjEwIiB3aWR0aD0iMXB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNzUiIHk9IjEwIiB3aWR0aD0iM3B4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxNzkiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxODMiIHk9IjEwIiB3aWR0aD0iMXB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxODYiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxODkiIHk9IjEwIiB3aWR0aD0iM3B4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxOTMiIHk9IjEwIiB3aWR0aD0iM3B4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIxOTciIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIyMDIiIHk9IjEwIiB3aWR0aD0iM3B4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIyMDYiIHk9IjEwIiB3aWR0aD0iMXB4IiBoZWlnaHQ9IjEwMHB4IiAvPgo8cmVjdCB4PSIyMDgiIHk9IjEwIiB3aWR0aD0iMnB4IiBoZWlnaHQ9IjEwMHB4IiAvPgoKPC9nPjwvZz4KPC9zdmc+Cg==","text":"1ZZ0600023030002442441027"}}}'
+    http_version: 
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0

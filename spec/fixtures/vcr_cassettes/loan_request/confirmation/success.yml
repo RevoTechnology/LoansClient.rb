@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://revoup.ru/api/loans/v1/loan_requests/some-lr-token/confirmation
+    body:
+      encoding: UTF-8
+      string: '{"code":"1111"}'
+    headers:
+      Authorization:
+      - some-session-token
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Frame-Options:
+      - ALLOWALL
+      Etag:
+      - W/"b4838206a73b58edd6b291858a01dfe5"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 2958d81dd8f9d8903e0a4cb5b4cbc3d9
+      - 5679c09d-591d-4c4c-a52c-14c87b62ce4a
+      X-Runtime:
+      - '0.826161'
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: '{"client":{"first_name":"Владилен","middle_name":"Гарриевич","last_name":"Пупкин","credit_limit":"6000.0","decision":"approved","decision_code":210,"decision_message":"Покупка
+        на сумму 3000.0 ₽ успешно совершена!"}}'
+    http_version: 
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0

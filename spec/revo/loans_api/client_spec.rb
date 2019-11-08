@@ -4,26 +4,14 @@ RSpec.describe Revo::LoansApi::Client do
       config = {
         login: 'some-agent',
         password: 'p@$$w0rd',
-        base_url: 'https://backend.qa.revoup.ru/api/loans/v1'
+        base_url: 'https://revoup.ru/api/loans/v1'
       }
-      stubbed_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/sessions').to_return(
-        headers: { 'Content-Type': 'application/json' },
-        body: {
-          user: { authentication_token: 'some-token' }
-        }.to_json
-      )
       client = described_class.new(config)
 
-      client.create_session
+      VCR.use_cassette('session/success') do
+        client.create_session
+      end
 
-      expect(stubbed_request.with(
-        body: {
-          user: {
-            login: 'some-agent',
-            password: 'p@$$w0rd'
-          }
-        }
-      )).to have_been_requested
       expect(client.session_token).to eq('some-token')
     end
 
@@ -32,18 +20,13 @@ RSpec.describe Revo::LoansApi::Client do
         config = {
           login: 'some-agent',
           password: 'p@$$w0rd',
-          base_url: 'https://backend.qa.revoup.ru/api/loans/v1'
+          base_url: 'https://revoup.ru/api/loans/v1'
         }
-        stubbed_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/sessions').to_return(
-          headers: { 'Content-Type': 'application/json' },
-          body: {
-            errors: { manager: ['неверный логин и/или пароль'] }
-          }.to_json,
-          status: 422
-        )
         client = described_class.new(config)
 
-        result = client.create_session
+        result = VCR.use_cassette('session/invalid_credentials') do
+          client.create_session
+        end
 
         expect(result).to have_attributes(
           success?: false,
@@ -57,19 +40,17 @@ RSpec.describe Revo::LoansApi::Client do
         config = {
           login: 'some-agent',
           password: 'p@$$w0rd',
-          base_url: 'https://backend.qa.revoup.ru/api/loans/v1'
+          base_url: 'https://revoup.ru/api/loans/v1'
         }
-        stubbed_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/sessions').to_return(
-          headers: { 'Content-Type': 'application/json' },
-          status: 500
-        )
         client = described_class.new(config)
 
-        result = client.create_session
+        result = VCR.use_cassette('session/server_error') do
+          client.create_session
+        end
 
         expect(result).to have_attributes(
           success?: false,
-          response: nil
+          response: include('DOCTYPE')
         )
       end
     end
@@ -79,9 +60,9 @@ RSpec.describe Revo::LoansApi::Client do
         config = {
           login: 'some-agent',
           password: 'p@$$w0rd',
-          base_url: 'https://backend.qa.revoup.ru/api/loans/v1'
+          base_url: 'https://revoup.ru/api/loans/v1'
         }
-        stubbed_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/sessions').to_timeout
+        stub_request(:post, 'https://revoup.ru/api/loans/v1/sessions').to_timeout
         client = described_class.new(config)
 
         expect {
@@ -94,83 +75,49 @@ RSpec.describe Revo::LoansApi::Client do
   describe 'loan request creation' do
     it 'returns a token along with terms' do
       config = {
-        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-        session_token: 'some-token'
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'some-session-token'
       }
-      stubbed_creation_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests').to_return(
-        headers: { 'Content-Type': 'application/json' },
-        body: {
-          loan_request: { token: 'some-lr-token' }
-        }.to_json
-      )
-      stubbed_details_request = stub_request(:get, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token').to_return(
-        headers: { 'Content-Type': 'application/json' },
-        body: {
-          loan_request: [
-            {
-              max_amount: 0.0,
-              min_amount: 0.0,
-              monthly_payment: 500.0,
-              product_code: 6,
-              schedule: [
-                {
-                  amount: 500.0,
-                  date: '16-04-2020'
-                }
-              ],
-              sms_info: 79.0,
-              sum_with_discount: 3000.0,
-              term: 6,
-              term_id: 117,
-              total_of_payments: 3000.0,
-              total_overpayment: 0.0
-            }
-          ]
-        }.to_json
-      )
       client = described_class.new(config)
 
-      loan_request_token = client.create_loan_request(
-        amount: 3_000,
-        mobile_phone: '78881234567',
-        store_id: 123
-      )
+      loan_request_token = VCR.use_cassette('loan_request/creation/success') do
+        client.create_loan_request(
+          amount: 3_000,
+          mobile_phone: '78881234567',
+          store_id: 309
+        )
+      end
 
-      expect(stubbed_creation_request.with(
-        body: {
-          loan_request: {
-            mobile_phone: '78881234567',
-            amount: 3_000,
-            store_id: 123
-          }
-        },
-        headers: { Authorization: 'some-token' }
-      )).to have_been_requested
-      expect(stubbed_details_request.with(
-        headers: { Authorization: 'some-token' }
-      )).to have_been_requested
       expect(loan_request_token).to have_attributes(
         success?: true,
         response: {
           token: 'some-lr-token',
           terms: [
             {
+              term: 3,
+              term_id: 50,
+              monthly_payment: 1073.0,
+              total_of_payments: 3219.0,
+              sum_with_discount: 3000.0,
+              total_overpayment: 219.0,
+              sms_info: 79.0,
+              product_code: '03',
+              min_amount: 1000.0,
               max_amount: 0.0,
-              min_amount: 0.0,
-              monthly_payment: 500.0,
-              product_code: 6,
               schedule: [
                 {
-                  amount: 500.0,
-                  date: '16-04-2020'
+                  date: '26-11-2018',
+                  amount: 1073.0
+                },
+                {
+                  date: '26-12-2018',
+                  amount: 1073.0
+                },
+                {
+                  date: '27-01-2019',
+                  amount: 1073.0
                 }
-              ],
-              sms_info: 79.0,
-              sum_with_discount: 3000.0,
-              term: 6,
-              term_id: 117,
-              total_of_payments: 3000.0,
-              total_overpayment: 0.0
+              ]
             }
           ]
         }
@@ -180,23 +127,18 @@ RSpec.describe Revo::LoansApi::Client do
     context 'when something is invalid' do
       it 'returns a list of errors' do
         config = {
-          base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-          session_token: 'some-token'
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'some-session-token'
         }
-        stubbed_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests').to_return(
-          headers: { 'Content-Type': 'application/json' },
-          body: {
-            errors: { store_id: ['не может быть пустым'] }
-          }.to_json,
-          status: 422
-        )
         client = described_class.new(config)
 
-        result = client.create_loan_request(
-          amount: 3_000,
-          mobile_phone: '78881234567',
-          store_id: 123
-        )
+        result = VCR.use_cassette('loan_request/creation/invalid') do
+          client.create_loan_request(
+            amount: 3_000,
+            mobile_phone: '78881234567',
+            store_id: 12_345
+          )
+        end
 
         expect(result).to have_attributes(
           success?: false,
@@ -208,47 +150,43 @@ RSpec.describe Revo::LoansApi::Client do
     context 'when `Authorization` header is invalid' do
       it 'raises `Revo::LoansApi::InvalidAccessTokenError`' do
         config = {
-          base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-          session_token: 'some-token'
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'fake'
         }
-        stubbed_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests').to_return(
-          headers: { 'Content-Type': 'text/html' },
-          body: '',
-          status: 401
-        )
         client = described_class.new(config)
 
         expect {
-          client.create_loan_request(
-            amount: 3_000,
-            mobile_phone: '78881234567',
-            store_id: 123
-          )
+          VCR.use_cassette('loan_request/creation/invalid_session_token') do
+            client.create_loan_request(
+              amount: 3_000,
+              mobile_phone: '78881234567',
+              store_id: 123
+            )
+          end
         }.to raise_error(Revo::LoansApi::InvalidAccessTokenError)
       end
     end
   end
 
-  describe 'document fetching' do
-    it 'returns the raw document in a given format' do
+  describe 'update loan request' do
+    let(:token) { '3440d32b95406a78340fb9bd146f4cf2ef702ea3' }
+
+    it 'return success response' do
       config = {
         base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
         session_token: 'some-token'
       }
-      stubbed_document_request = stub_request(:get, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token/documents/offer.pdf').to_return(
-        headers: { 'Content-Type': 'application/pdf' },
-        body: 'PDF%1.6-some-content'
+      stub_request(:put, "https://backend.qa.revoup.ru/api/loans/v1/loan_requests/#{token}").to_return(
+        headers: { 'Content-Type': 'application/json' },
+        body: ''
       )
       client = described_class.new(config)
 
-      document = client.document(type: :offer, format: :pdf, token: 'some-lr-token')
+      loan_request_response = client.update_loan_request(token: token, options: { amount: 3_000 })
 
-      expect(stubbed_document_request.with(
-        headers: { Authorization: 'some-token' }
-      )).to have_been_requested
-      expect(document).to have_attributes(
+      expect(loan_request_response).to have_attributes(
         success?: true,
-        response: 'PDF%1.6-some-content'
+        response: {}
       )
     end
 
@@ -258,16 +196,73 @@ RSpec.describe Revo::LoansApi::Client do
           base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
           session_token: 'some-token'
         }
-        stubbed_document_request = stub_request(:get, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token/documents/offer.pdf').to_return(
+        stub_request(:put, "https://backend.qa.revoup.ru/api/loans/v1/loan_requests/#{token}").to_return(
           headers: { 'Content-Type': 'application/json' },
           body: {
-            errors: { client: ['ещё не создан'] }
+            errors: { amount: ['не может быть пустым'] }
           }.to_json,
           status: 422
         )
         client = described_class.new(config)
 
-        result = client.document(type: :offer, format: :pdf, token: 'some-lr-token')
+        result = client.update_loan_request(token: token, options: { amount: 3_000 })
+
+        expect(result).to have_attributes(
+          success?: false,
+          response: { errors: { amount: ['не может быть пустым'] } }
+        )
+      end
+    end
+
+    context 'when `Authorization` header is invalid' do
+      it 'raises `Revo::LoansApi::InvalidAccessTokenError`' do
+        config = {
+          base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
+          session_token: 'some-token'
+        }
+        stub_request(:put, "https://backend.qa.revoup.ru/api/loans/v1/loan_requests/#{token}").to_return(
+          headers: { 'Content-Type': 'text/html' },
+          body: '',
+          status: 401
+        )
+        client = described_class.new(config)
+
+        expect {
+          client.update_loan_request(token: token, options: { amount: 3_000 })
+        }.to raise_error(Revo::LoansApi::InvalidAccessTokenError)
+      end
+    end
+  end
+
+  describe 'document fetching' do
+    it 'returns the raw document in a given format' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'some-session-token'
+      }
+      client = described_class.new(config)
+
+      document = VCR.use_cassette('document/success') do
+        client.document(type: :offer, format: :pdf, token: 'some-lr-token')
+      end
+
+      expect(document).to have_attributes(
+        success?: true,
+        response: 'PDF%1.6-some-content'
+      )
+    end
+
+    context 'when something is invalid' do
+      it 'returns a list of errors' do
+        config = {
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'some-session-token'
+        }
+        client = described_class.new(config)
+
+        result = VCR.use_cassette('document/invalid') do
+          client.document(type: :offer, format: :pdf, token:'some-lr-token')
+        end
 
         expect(result).to have_attributes(
           success?: false,
@@ -280,20 +275,15 @@ RSpec.describe Revo::LoansApi::Client do
   describe 'loan confirmation message sending' do
     it 'returns `true`' do
       config = {
-        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-        session_token: 'some-token'
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'some-session-token'
       }
-      stubbed_text_sending_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token/client/confirmation').to_return(
-        headers: { 'Content-Type': 'text/html' },
-        body: ''
-      )
       client = described_class.new(config)
 
-      result = client.send_loan_confirmation_message(token: 'some-lr-token')
+      result = VCR.use_cassette('client_confirmation/success') do
+        client.send_loan_confirmation_message(token: 'some-lr-token')
+      end
 
-      expect(stubbed_text_sending_request.with(
-        headers: { Authorization: 'some-token' }
-      )).to have_been_requested
       expect(result).to have_attributes(
         success?: true,
         response: nil
@@ -303,19 +293,14 @@ RSpec.describe Revo::LoansApi::Client do
     context 'when something is invalid' do
       it 'returns a list of errors' do
         config = {
-          base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-          session_token: 'some-token'
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'some-session-token'
         }
-        stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token/client/confirmation').to_return(
-          headers: { 'Content-Type': 'application/json' },
-          body: {
-            errors: { mobile_phone: ['не может быть пустым'] }
-          }.to_json,
-          status: 422
-        )
         client = described_class.new(config)
 
-        result = client.send_loan_confirmation_message(token: 'some-lr-token')
+        result = VCR.use_cassette('client_confirmation/invalid') do
+          client.send_loan_confirmation_message(token: 'some-lr-token')
+        end
 
         expect(result).to have_attributes(
           success?: false,
@@ -328,31 +313,15 @@ RSpec.describe Revo::LoansApi::Client do
   describe 'loan request completion' do
     it 'returns a scored client' do
       config = {
-        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-        session_token: 'some-token'
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'some-session-token'
       }
-      stubbed_completion_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token/confirmation').to_return(
-        headers: { 'Content-Type': 'application/json' },
-        body: {
-          client: {
-            first_name: 'Владилен',
-            middle_name: 'Гарриевич',
-            last_name: 'Пупкин',
-            credit_limit: '6000.0',
-            decision: 'declined',
-            decision_code: 710,
-            decision_message: 'К сожалению, сегодня мы не можем одобрить Вашу заявку.'
-          }
-        }.to_json
-      )
       client = described_class.new(config)
 
-      result = client.complete_loan_request(token: 'some-lr-token', code: '1234')
+      result = VCR.use_cassette('loan_request/confirmation/success') do
+        client.complete_loan_request(token: 'some-lr-token', code: '1111')
+      end
 
-      expect(stubbed_completion_request.with(
-        headers: { Authorization: 'some-token' },
-        body: { code: '1234' }
-      )).to have_been_requested
       expect(result).to have_attributes(
         success?: true,
         response: {
@@ -361,9 +330,9 @@ RSpec.describe Revo::LoansApi::Client do
             middle_name: 'Гарриевич',
             last_name: 'Пупкин',
             credit_limit: '6000.0',
-            decision: 'declined',
-            decision_code: 710,
-            decision_message: 'К сожалению, сегодня мы не можем одобрить Вашу заявку.'
+            decision: 'approved',
+            decision_code: 210,
+            decision_message: 'Покупка на сумму 3000.0 ₽ успешно совершена!'
           }
         }
       )
@@ -372,23 +341,18 @@ RSpec.describe Revo::LoansApi::Client do
     context 'when something is invalid' do
       it 'returns a list of errors' do
         config = {
-          base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-          session_token: 'some-token'
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'some-session-token'
         }
-        stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token/confirmation').to_return(
-          headers: { 'Content-Type': 'application/json' },
-          body: {
-            errors: { client: ['не может быть пустым'] }
-          }.to_json,
-          status: 422
-        )
         client = described_class.new(config)
 
-        result = client.complete_loan_request(token: 'some-lr-token', code: '1234')
+        result = VCR.use_cassette('loan_request/confirmation/invalid') do
+          client.complete_loan_request(token: 'some-lr-token', code: 'invalid')
+        end
 
         expect(result).to have_attributes(
           success?: false,
-          response: { errors: { client: ['не может быть пустым'] } }
+          response: { errors: { code: ['неправильный код'] } }
         )
       end
     end
@@ -397,21 +361,15 @@ RSpec.describe Revo::LoansApi::Client do
   describe 'loan creation' do
     it 'returns `true`' do
       config = {
-        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-        session_token: 'some-token'
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'some-session-token'
       }
-      stubbed_completion_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token/loan').to_return(
-        headers: { 'Content-Type': 'text/html' },
-        body: ''
-      )
       client = described_class.new(config)
 
-      result = client.create_loan(token: 'some-lr-token', term_id: 6)
+      result = VCR.use_cassette('loan/creation/success') do
+        client.create_loan(token: 'some-lr-token', term_id: 51)
+      end
 
-      expect(stubbed_completion_request.with(
-        headers: { Authorization: 'some-token' },
-        body: { term_id: 6 }
-      )).to have_been_requested
       expect(result).to have_attributes(
         success?: true,
         response: nil
@@ -421,19 +379,14 @@ RSpec.describe Revo::LoansApi::Client do
     context 'when something is invalid' do
       it 'returns a list of errors' do
         config = {
-          base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-          session_token: 'some-token'
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'some-session-token'
         }
-        stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token/loan').to_return(
-          headers: { 'Content-Type': 'application/json' },
-          body: {
-            errors: { base: ['К сожалению, ваша заявка отклонена'] }
-          }.to_json,
-          status: 422
-        )
         client = described_class.new(config)
 
-        result = client.create_loan(token: 'some-lr-token', term_id: 6)
+        result = VCR.use_cassette('loan/creation/invalid') do
+          client.create_loan(token: 'some-lr-token', term_id: 51)
+        end
 
         expect(result).to have_attributes(
           success?: false,
@@ -446,76 +399,24 @@ RSpec.describe Revo::LoansApi::Client do
   describe 'loan finalization' do
     it 'returns a list of barcodes and the order ID' do
       config = {
-        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-        session_token: 'some-token'
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'some-session-token'
       }
-      stubbed_completion_request = stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token/loan/finalization').to_return(
-        headers: { 'Content-Type': 'application/json' },
-        body: <<~JSON
-          {
-            "offer_id": "871169296",
-            "loan_application": {
-              "barcodes": [
-                {
-                  "image": "data:image/svg+xml;base64,abc",
-                  "text": "871169296"
-                },
-                {
-                  "image": "data:image/svg+xml;base64,abc",
-                  "text": "$MT REV  011 K"
-                },
-                {
-                  "image": "data:image/svg+xml;base64,abc",
-                  "text": "N%PUPKIN%VLADILEN%GARRIEVI4"
-                },
-                {
-                  "image": "data:image/svg+xml;base64,abc",
-                  "text": "E%0030000000000000291019"
-                },
-                {
-                  "image": "data:image/svg+xml;base64,abc",
-                  "text": "RS%40702810887880000949"
-                }
-              ]
-            }
-          }
-        JSON
-      )
       client = described_class.new(config)
 
-      result = client.finalize_loan(token: 'some-lr-token', code: '1111')
+      result = VCR.use_cassette('loan/finalization/success') do
+        client.finalize_loan(token: 'some-lr-token', code: '1111')
+      end
 
-      expect(stubbed_completion_request.with(
-        headers: { Authorization: 'some-token' },
-        body: { loan: { agree_processing: '1', confirmation_code: '1111' } }
-      )).to have_been_requested
       expect(result).to have_attributes(
         success?: true,
         response: {
-          offer_id: '871169296',
+          offer_id: '244244102',
           loan_application: {
-            barcodes: [
-              {
-                image: 'data:image/svg+xml;base64,abc',
-                text: '871169296'
-              },
-              {
-                image: 'data:image/svg+xml;base64,abc',
-                text: '$MT REV  011 K'
-              },
-              {
-                image: 'data:image/svg+xml;base64,abc',
-                text: 'N%PUPKIN%VLADILEN%GARRIEVI4'
-              },
-              {
-                image: 'data:image/svg+xml;base64,abc',
-                text: 'E%0030000000000000291019'
-              },
-              {
-                image: 'data:image/svg+xml;base64,abc',
-                text: 'RS%40702810887880000949'
-              }
-            ]
+            barcodes: {
+              image: a_string_including('data:image/svg+xml;base64,'),
+              text: '1ZZ0600023030002442441027'
+            }
           }
         }
       )
@@ -524,25 +425,267 @@ RSpec.describe Revo::LoansApi::Client do
     context 'when something is invalid' do
       it 'returns a list of errors' do
         config = {
-          base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
-          session_token: 'some-token'
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'some-session-token'
         }
-        stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/loan_requests/some-lr-token/loan/finalization').to_return(
-          headers: { 'Content-Type': 'application/json' },
-          body: {
-            errors: { agree_processing: ['не может быть пустым'], confirmation_code: ['неправильный код'] }
-          }.to_json,
-          status: 422
-        )
         client = described_class.new(config)
 
-        result = client.finalize_loan(token: 'some-lr-token', code: nil)
+        result = VCR.use_cassette('loan/finalization/invalid') do
+          client.finalize_loan(token: 'some-lr-token', code: nil)
+        end
 
         expect(result).to have_attributes(
           success?: false,
-          response: { errors: { agree_processing: ['не может быть пустым'], confirmation_code: ['неправильный код'] } }
+          response: { errors: { confirmation_code: ['неправильный код'] } }
         )
       end
+    end
+  end
+
+  context 'orders fetching' do
+    let(:config) do
+      {
+        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
+        session_token: 'some-token'
+      }
+    end
+
+    it 'returns list of orders' do
+      stub_request(:get, 'https://backend.qa.revoup.ru/api/loans/v1/orders').to_return(
+        headers: { 'Content-Type': 'application/json' },
+        body: {
+          orders: [
+            {
+              id: '1525182',
+              client_name: 'Иванов Иван Иванович',
+              mobile_phone: '8882200001',
+              barcode: '10009302315006587574891'
+            },
+            {
+              id: '1525183',
+              client_name: 'Петров Петр Петрович',
+              mobile_phone: '8882200002',
+              barcode: '10009302315006587574892'
+            }
+          ]
+        }.to_json
+      )
+
+      client = described_class.new(config)
+
+      result = client.orders(store_id: 1)
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: {
+          orders: [
+            {
+              id: '1525182',
+              client_name: 'Иванов Иван Иванович',
+              mobile_phone: '8882200001',
+              barcode: '10009302315006587574891'
+            },
+            {
+              id: '1525183',
+              client_name: 'Петров Петр Петрович',
+              mobile_phone: '8882200002',
+              barcode: '10009302315006587574892'
+            }
+          ]
+        }
+      )
+    end
+
+    context 'when filter by mobile_phone is present' do
+      it 'returns list of selected orders' do
+        stub_request(:get, 'https://backend.qa.revoup.ru/api/loans/v1/orders').to_return(
+          headers: { 'Content-Type': 'application/json' },
+          body: {
+            orders: [
+              {
+                id: '1525182',
+                client_name: 'Иванов Иван Иванович',
+                mobile_phone: '8882200001',
+                barcode: '10009302315006587574891'
+              }
+            ]
+          }.to_json
+        )
+
+        client = described_class.new(config)
+
+        result = client.orders(store_id: 1, filters: { mobile_phone: '8882200001' })
+
+        expect(result).to have_attributes(
+          success?: true,
+          response: {
+            orders: [
+              {
+                id: '1525182',
+                client_name: 'Иванов Иван Иванович',
+                mobile_phone: '8882200001',
+                barcode: '10009302315006587574891'
+              }
+            ]
+          }
+        )
+      end
+    end
+  end
+
+  context 'sending return confirmation code' do
+    let(:order_id) { '1525182' }
+
+    it 'returns success response' do
+      config = {
+        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
+        session_token: 'some-token'
+      }
+
+      stub_request(:post, "https://backend.qa.revoup.ru/api/loans/v1/orders/#{order_id}/send_return_confirmation_code").to_return(
+        headers: { 'Content-Type': 'application/json' },
+        body: ''
+      )
+
+      client = described_class.new(config)
+
+      result = client.send_return_confirmation_code(order_id: order_id)
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: nil
+      )
+    end
+  end
+
+  context 'create return' do
+    let(:order_id) { '1525182' }
+    let(:confirmation_code) { '1111' }
+    let(:amount) { 3_000 }
+    let(:store_id) { 1 }
+    let(:config) do
+      {
+        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
+        session_token: 'some-token'
+      }
+    end
+
+    it 'returns success response with valid data' do
+      stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/returns').to_return(
+        headers: { 'Content-Type': 'application/json' },
+        body: {
+          return: {
+            id: '234',
+            barcode: '2ZZ011235616399006082053267'
+          }
+        }.to_json
+      )
+
+      client = described_class.new(config)
+
+      result = client.create_return(
+        order_id: order_id,
+        code: confirmation_code,
+        amount: amount,
+        store_id: store_id
+      )
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: {
+          return: {
+            id: '234',
+            barcode: '2ZZ011235616399006082053267'
+          }
+        }
+      )
+    end
+
+    context 'when data is invalid' do
+      let(:amount) { nil }
+      let(:store_id) { 'fake' }
+
+      it 'returns unprocessible entity response with valid hash' do
+        stub_request(:post, 'https://backend.qa.revoup.ru/api/loans/v1/returns').to_return(
+          headers: { 'Content-Type': 'application/json' },
+          body: {
+            errors: {
+              amount: ['не может быть пустым'],
+              store_id: ['не найден']
+            }
+          }.to_json,
+          status: 422
+        )
+
+        client = described_class.new(config)
+
+        result = client.create_return(
+          order_id: order_id,
+          code: confirmation_code,
+          amount: amount,
+          store_id: store_id
+        )
+
+        expect(result).to have_attributes(
+          success?: false,
+          response: {
+            errors: {
+              amount: ['не может быть пустым'],
+              store_id: ['не найден']
+            }
+          }
+        )
+      end
+    end
+  end
+
+  context 'return confirmation' do
+    let(:return_id) { '234' }
+
+    it 'returns success response' do
+      config = {
+        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
+        session_token: 'some-token'
+      }
+
+      stub_request(:post, "https://backend.qa.revoup.ru/api/loans/v1/returns/#{return_id}/confirm").to_return(
+        headers: { 'Content-Type': 'application/json' },
+        body: ''
+      )
+
+      client = described_class.new(config)
+
+      result = client.confirm_return(return_id: return_id)
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: nil
+      )
+    end
+  end
+
+  context 'return cancelation' do
+    let(:return_id) { '234' }
+
+    it 'returns success response' do
+      config = {
+        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
+        session_token: 'some-token'
+      }
+
+      stub_request(:post, "https://backend.qa.revoup.ru/api/loans/v1/returns/#{return_id}/cancel").to_return(
+        headers: { 'Content-Type': 'application/json' },
+        body: ''
+      )
+
+      client = described_class.new(config)
+
+      result = client.cancel_return(return_id: return_id)
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: nil
+      )
     end
   end
 end

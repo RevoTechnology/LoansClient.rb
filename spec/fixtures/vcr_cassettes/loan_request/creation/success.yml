@@ -1,0 +1,107 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://revoup.ru/api/loans/v1/loan_requests
+    body:
+      encoding: UTF-8
+      string: '{"loan_request":{"mobile_phone":"78881234567","amount":3000,"store_id":309}}'
+    headers:
+      Authorization:
+      - some-session-token
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Frame-Options:
+      - ALLOWALL
+      Etag:
+      - W/"9fbe686998e4de8ce898ed91615374de"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 946b6bb8759d4974e4e16f20848795d2
+      - aa0ffdc7-09c8-4683-9418-979829e2b3e9
+      X-Runtime:
+      - '0.119946'
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: '{"loan_request":{"token":"some-lr-token"}}'
+    http_version: 
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+- request:
+    method: get
+    uri: https://revoup.ru/api/loans/v1/loan_requests/some-lr-token
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Authorization:
+      - some-session-token
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Frame-Options:
+      - ALLOWALL
+      Etag:
+      - W/"e92f06324f933cb548585b3a4ebd9823"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - '08c203af-9d71-47f1-a3c4-7bc384451e0c'
+      - 5c13e7e6aa9a087387018b07dea37c7a
+      X-Runtime:
+      - '0.236320'
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: '{"loan_request":[{"term":3,"term_id":50,"monthly_payment":1073.0,"total_of_payments":3219.0,"sum_with_discount":3000.0,"total_overpayment":219.0,"sms_info":79.0,"product_code":"03","min_amount":1000.0,"max_amount":0.0,"schedule":[{"date":"26-11-2018","amount":1073.0},{"date":"26-12-2018","amount":1073.0},{"date":"27-01-2019","amount":1073.0}]}]}'
+    http_version: 
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0
