@@ -1,0 +1,27 @@
+version: 2.1
+
+jobs:
+  deploy:
+    docker:
+      - image: circleci/ruby:2.6.4
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Setup RubyGems
+          command: bash .circleci/setup_rubygems.sh
+      - run:
+          name: Publish to RubyGems
+          command: |
+            gem build revo-loans_api
+            gem push "revo-loans_api-$(git describe --tags).gem"
+
+workflows:
+  build:
+    jobs:
+      - deploy:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
