@@ -405,7 +405,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('loan/finalization/success') do
-        client.finalize_loan(token: 'some-lr-token', code: '1111')
+        client.finalize_loan(token: 'some-lr-token', code: '1111', sms_info: '1')
       end
 
       expect(result).to have_attributes(

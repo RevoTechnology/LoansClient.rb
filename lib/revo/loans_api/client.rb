@@ -71,8 +71,14 @@ class Revo::LoansApi::Client
     make_request(:post, "loan_requests/#{token}/loan", term_id: term_id)
   end
 
-  def finalize_loan(token:, code:)
-    make_request(:post, "loan_requests/#{token}/loan/finalization", loan: { agree_processing: '1', confirmation_code: code })
+  def finalize_loan(token:, code:, sms_info: '0')
+    loan_params = {
+      agree_processing: '1',
+      confirmation_code: code,
+      agree_sms_info: sms_info
+    }
+
+    make_request(:post, "loan_requests/#{token}/loan/finalization", loan: loan_params)
   end
 
   # returns
