@@ -5,7 +5,7 @@ http_interactions:
     uri: https://revoup.ru/api/loans/v1/loan_requests/some-lr-token/loan/finalization
     body:
       encoding: UTF-8
-      string: '{"loan":{"agree_processing":"1","confirmation_code":1111}}'
+      string: '{"loan":{"agree_processing":"1","confirmation_code":1111,"agree_sms_info":"0"}}'
     headers:
       Authorization:
       - some-session-token
