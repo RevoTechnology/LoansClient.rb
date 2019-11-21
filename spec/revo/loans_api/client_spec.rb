@@ -688,4 +688,156 @@ RSpec.describe Revo::LoansApi::Client do
       )
     end
   end
+
+  describe 'start self registraion' do
+    it 'returns success response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'f90f00aed176c1661f56'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('client/self_registration/success') do
+        client.start_self_registration(
+          token: '3440d32b95406a78340fb9bd146f4cf2ef702ea3',
+          mobile_phone: '78882223344'
+        )
+      end
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: nil
+      )
+    end
+
+    context 'when mobile_phone is blank' do
+      it 'returns a list of errors' do
+        config = {
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'f90f00aed176c1661f56'
+        }
+        client = described_class.new(config)
+
+        result = VCR.use_cassette('client/self_registration/invalid') do
+          client.start_self_registration(
+            token: '3440d32b95406a78340fb9bd146f4cf2ef702ea3',
+            mobile_phone: ''
+          )
+        end
+
+        expect(result).to have_attributes(
+          success?: false,
+          response: {
+            errors: {
+              mobile_phone: ['не может быть пустым']
+            }
+          }
+        )
+      end
+    end
+  end
+
+  describe 'check client code' do
+    it 'return success response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'f90f00aed176c1661f56'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('client/check_code/success') do
+        client.check_client_code(
+          token: '3440d32b95406a78340fb9bd146f4cf2ef702ea3',
+          code: '1111'
+        )
+      end
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: {
+          code: {
+            valid: true
+          }
+        }
+      )
+    end
+  end
+
+  describe 'client creation' do
+    it 'returns client information' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'f90f00aed176c1661f56'
+      }
+      client = described_class.new(config)
+
+      client_params = {
+        mobile_phone: '8882223344',
+        first_name: 'Иван',
+        middle_name: 'Иванович',
+        last_name: 'Иванов',
+        birth_date: '01-01-1990',
+        email: 'user23423423423@example.com',
+        area: 'Москва',
+        settlement: 'Москва',
+        street: 'Новая',
+        house: '123',
+        building: '123',
+        apartment: '123',
+        postal_code: '12345',
+        black_mark: false,
+        agrees_bki: '1',
+        agrees_terms: '1',
+        confirmation_code: '1111',
+        password: 's3cure p4ssw0rd!',
+        password_confirmation: 's3cure p4ssw0rd!',
+        id_documents: {
+          russian_passport: {
+            number: '123456',
+            series: '2204'
+          }
+        }
+      }
+
+      result = VCR.use_cassette('client/success') do
+        client.create_client(
+          token: '3440d32b95406a78340fb9bd146f4cf2ef702ea3',
+          client_params: client_params
+        )
+      end
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: {
+          client: {
+            email: 'user23423423423@example.com',
+            birth_date: '01-01-1990',
+            first_name: 'Иван',
+            middle_name: 'Иванович',
+            last_name: 'Ивановтест',
+            area: 'Москва',
+            settlement: 'Москва',
+            street: 'Новая',
+            house: '123',
+            building: '123',
+            apartment: '123',
+            postal_code: '12345',
+            credit_limit: nil,
+            missing_documents: ['name', 'client_with_passport', 'living_addr'],
+            id_documents: {
+              russian_passport: {
+                number: '123456',
+                series: '2204',
+                expiry_date: nil
+              }
+            },
+            decision: 'approved',
+            credit_decision: 'approved',
+            decision_code: 210,
+            decision_message: 'Покупка на сумму 5000.0 ₽ успешно совершена!'
+          }
+        }
+      )
+    end
+  end
 end
