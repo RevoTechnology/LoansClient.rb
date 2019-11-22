@@ -281,11 +281,13 @@ result = client.cancel_return(
 # Success:
 result.success? # => true
 result.response # => `nil`
+```
 
 
 ### Start self registration
 
 
+```ruby
 result = client.start_self_registration(
   token: 'some-lr-token', # use the one you got when creating a loan request
   mobile_phone: '78881234567'
@@ -298,11 +300,13 @@ result.response # => `nil`
 # Failure:
 result.success? # => false
 result.response # => `{ errors: { mobile_phone: ['error'] } }`
+```
 
 
 ### Check client confirmation code
 
 
+```ruby
 result = client.check_client_code(
   token: 'some-lr-token', # use the one you got when creating a loan request
   code: '1234'
@@ -315,11 +319,13 @@ result.response # => `{ code: { valid: true } }`
 # Failure:
 result.success? # => true
 result.response # => `{ code: { valid: false } }`
+```
 
 
 ### Update client data
 
 
+```ruby
 result = client.create_client(
   token: 'some-lr-token', # use the one you got when creating a loan request
   client_params: {
@@ -417,8 +423,8 @@ result.response # =>
 #   decision_code: 610,
 #   decision_message: 'К сожалению, Ваша заявка отклонена'
 # }
-
 ```
+
 
 ### Possible Exceptions
 
