@@ -110,6 +110,20 @@ class Revo::LoansApi::Client
     make_request(:post, "returns/#{return_id}/cancel")
   end
 
+  def start_self_registration(token:, mobile_phone:)
+    make_request(:post, "loan_requests/#{token}/client/self_registration",
+                 mobile_phone: mobile_phone)
+  end
+
+  def check_client_code(token:, code:)
+    make_request(:post, "loan_requests/#{token}/client/check_code", code: code)
+  end
+
+  def create_client(token:, client_params:, provider_data: {})
+    make_request(:post, "loan_requests/#{token}/client",
+                 client: client_params, provider_data: provider_data)
+  end
+
   private
 
   attr_reader :connection, :base_url, :login, :password

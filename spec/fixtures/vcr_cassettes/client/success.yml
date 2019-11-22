@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://revoup.ru/api/loans/v1/loan_requests/3440d32b95406a78340fb9bd146f4cf2ef702ea3/client
+    body:
+      encoding: UTF-8
+      string: '{"client":{"mobile_phone":"8882223344","first_name":"Иван","middle_name":"Иванович","last_name":"Иванов","birth_date":"01-01-1990","email":"user23423423423@example.com","area":"Москва","settlement":"Москва","street":"Новая","house":"123","building":"123","apartment":"123","postal_code":"12345","black_mark":false,"agrees_bki":"1","agrees_terms":"1","confirmation_code":"1111","password":"s3cure
+        p4ssw0rd!","password_confirmation":"s3cure p4ssw0rd!","id_documents":{"russian_passport":{"number":"123456","series":"2204"}}},"provider_data":{}}'
+    headers:
+      Authorization:
+      - f90f00aed176c1661f56
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      X-Frame-Options:
+      - ALLOWALL
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-store, must-revalidate, private, max-age=0
+      X-Request-Id:
+      - ffb399f8-ebe1-48fe-b237-7d2cba8616d4
+      X-Runtime:
+      - '0.613716'
+      Vary:
+      - Origin
+      X-Miniprofiler-Original-Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Miniprofiler-Ids:
+      - k0f18nt50fs37cmaoufz,df2u0rm09rm56ege04kc,pirlt0jxq8xw120n96jw,he7ttgyetjagtglijka1,yu2ztm02zcpcp3zkdnbz,ltl0hajnoyuzap7x2bkf,marya012ind6l0bzg0kw,llqbga4indb2z7exvodd,b2or5rkg4sngku2d2jcs,aozddp8mowpiw0ix10o8,e2wgzn2ek3ouq4zfx3dj,4v26n6lapkgw629otgg4,jtfs52d97wtqjtsqw4h5,a7um6xh9tnvbizt6f157,j9lp95av4locgg6vaenl,w22uh06u0j81j5d17399,h2llf4ab7gkwiypp4d98,bizl89cuidmz978pdmt8,9zvr379v6qa19sgqrnl6,xl63idlg1l1vlqfspzn4
+      Server:
+      - WEBrick/1.4.2 (Ruby/2.5.5/2019-03-15)
+      Date:
+      - Thu, 21 Nov 2019 10:06:30 GMT
+      Content-Length:
+      - '658'
+      Connection:
+      - Keep-Alive
+      Set-Cookie:
+      - __profilin=p%3Dt; path=/; HttpOnly
+    body:
+      encoding: UTF-8
+      string: '{"client":{"email":"user23423423423@example.com","birth_date":"01-01-1990","first_name":"Иван","middle_name":"Иванович","last_name":"Ивановтест","area":"Москва","settlement":"Москва","street":"Новая","house":"123","building":"123","apartment":"123","postal_code":"12345","credit_limit":null,"missing_documents":["name","client_with_passport","living_addr"],"id_documents":{"russian_passport":{"number":"123456","series":"2204","expiry_date":null}},"decision":"approved","credit_decision":"approved","decision_code":210,"decision_message":"Покупка
+        на сумму 5000.0 ₽ успешно совершена!"}}'
+    http_version: 
+  recorded_at: Thu, 21 Nov 2019 10:06:30 GMT
+recorded_with: VCR 5.0.0
