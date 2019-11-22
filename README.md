@@ -281,6 +281,143 @@ result = client.cancel_return(
 # Success:
 result.success? # => true
 result.response # => `nil`
+
+
+### Start self registration
+
+
+result = client.start_self_registration(
+  token: 'some-lr-token', # use the one you got when creating a loan request
+  mobile_phone: '78881234567'
+)
+
+# Success:
+result.success? # => true
+result.response # => `nil`
+
+# Failure:
+result.success? # => false
+result.response # => `{ errors: { mobile_phone: ['error'] } }`
+
+
+### Check client confirmation code
+
+
+result = client.check_client_code(
+  token: 'some-lr-token', # use the one you got when creating a loan request
+  code: '1234'
+)
+
+# Success:
+result.success? # => true
+result.response # => `{ code: { valid: true } }`
+
+# Failure:
+result.success? # => true
+result.response # => `{ code: { valid: false } }`
+
+
+### Update client data
+
+
+result = client.create_client(
+  token: 'some-lr-token', # use the one you got when creating a loan request
+  client_params: {
+    mobile_phone: '8881234567',
+    first_name: 'Иван',
+    middle_name: 'Иванович',
+    last_name: 'Иванов',
+    birth_date: '01-01-1990',
+    email: 'user@example.com',
+    area: 'Москва',
+    settlement: 'Москва',
+    street: 'Новая',
+    house: '123',
+    building: '123',
+    apartment: '123',
+    postal_code: '12345',
+    black_mark: false,
+    agrees_bki: '1',
+    agrees_terms: '1',
+    confirmation_code: '1111',
+    password: 's3cure p4ssw0rd!',
+    password_confirmation: 's3cure p4ssw0rd!',
+    id_documents: {
+      russian_passport: {
+        number: '123456',
+        series: '2204'
+      }
+    }
+  },
+  provider_data: {}
+)
+
+# Success:
+result.success? # => true
+result.response # =>
+# client: {
+#   email: 'user@example.com',
+#   birth_date: '01-01-1990',
+#   first_name: 'Иван',
+#   middle_name: 'Иванович',
+#   last_name: 'Ивановтест',
+#   area: 'Москва',
+#   settlement: 'Москва',
+#   street: 'Новая',
+#   house: '123',
+#   building: '123',
+#   apartment: '123',
+#   postal_code: '12345',
+#   credit_limit: nil,
+#   missing_documents: ['name', 'client_with_passport', 'living_addr'],
+#   id_documents: {
+#     russian_passport: {
+#       number: '123456',
+#       series: '2204',
+#       expiry_date: nil
+#     }
+#   },
+#   decision: 'approved',
+#   credit_decision: 'approved',
+#   decision_code: 210,
+#   decision_message: 'Покупка на сумму 5000.0 ₽ успешно совершена!'
+# }
+
+# Failure 422:
+result.success? # => false
+result.response # => `{ errors: { mobile_phone: ['error'], id_documents: { russian_passport: ['another error'] } }`
+
+# Failure 452:
+result.success? # => false
+result.response # =>
+# client: {
+#   email: 'user@example.com',
+#   birth_date: '01-01-1990',
+#   first_name: 'Иван',
+#   middle_name: 'Иванович',
+#   last_name: 'Ивановтест',
+#   area: 'Москва',
+#   settlement: 'Москва',
+#   street: 'Новая',
+#   house: '123',
+#   building: '123',
+#   apartment: '123',
+#   postal_code: '12345',
+#   credit_limit: nil,
+#   missing_documents: ['name', 'client_with_passport', 'living_addr'],
+#   id_documents: {
+#     russian_passport: {
+#       number: '123456',
+#       series: '2204',
+#       expiry_date: nil
+#     }
+#   },
+#   decision: 'declined',
+#   credit_decision: 'declined',
+#   decision_code: 610,
+#   decision_message: 'К сожалению, Ваша заявка отклонена'
+# }
+
 ```
 
 ### Possible Exceptions
