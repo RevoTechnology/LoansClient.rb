@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://revoup.ru/api/loans/v1//clients/18141
+    body:
+      encoding: UTF-8
+      string: '{"client":{"mobile_phone":"8882223344","email":"userfakeemail@example.com"}}'
+    headers:
+      Authorization:
+      - f90f00aed176c1661f56
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - ALLOWALL
+      Content-Type:
+      - text/html
+      Cache-Control:
+      - no-store, must-revalidate, private, max-age=0
+      X-Request-Id:
+      - 8864b4ed-624a-45e1-8dfd-081c1d1339cd
+      X-Runtime:
+      - '0.152645'
+      Vary:
+      - Origin
+      X-Miniprofiler-Original-Cache-Control:
+      - no-cache
+      X-Miniprofiler-Ids:
+      - m32ud69bma27sns7p7id,fiamsjcz5tbfivq0v4u7
+      Content-Length:
+      - '0'
+      Server:
+      - WEBrick/1.4.2 (Ruby/2.5.5/2019-03-15)
+      Date:
+      - Fri, 29 Nov 2019 07:53:14 GMT
+      Connection:
+      - Keep-Alive
+      Set-Cookie:
+      - __profilin=p%3Dt; path=/; HttpOnly
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    http_version: 
+  recorded_at: Fri, 29 Nov 2019 07:53:14 GMT
+recorded_with: VCR 5.0.0

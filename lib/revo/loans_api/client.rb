@@ -124,6 +124,10 @@ class Revo::LoansApi::Client
                  client: client_params, provider_data: provider_data)
   end
 
+  def update_client(id:, client_params:)
+    make_request(:patch, "/clients/#{id}", client: client_params)
+  end
+
   private
 
   attr_reader :connection, :base_url, :login, :password

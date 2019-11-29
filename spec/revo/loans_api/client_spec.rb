@@ -840,4 +840,56 @@ RSpec.describe Revo::LoansApi::Client do
       )
     end
   end
+
+  describe 'update client' do
+    it 'returns success response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'f90f00aed176c1661f56'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('client/updater/success') do
+        client.update_client(
+          id: '18141',
+          client_params: {
+            mobile_phone: '8882223344',
+            email: 'userfakeemail@example.com'
+          }
+        )
+      end
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: nil
+      )
+    end
+
+    it 'returns unprocessible response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'f90f00aed176c1661f56'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('client/updater/failure') do
+        client.update_client(
+          id: '18141',
+          client_params: {
+            mobile_phone: '8882223344',
+            email: 'userfakeemail@example.com'
+          }
+        )
+      end
+
+      expect(result).to have_attributes(
+        success?: false,
+        response: {
+          errors: {
+            email: ['уже существует']
+          }
+        }
+      )
+    end
+  end
 end

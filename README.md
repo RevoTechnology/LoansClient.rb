@@ -425,6 +425,28 @@ result.response # =>
 # }
 ```
 
+### Patch client data
+
+
+```ruby
+result = client.update_client(
+  id: '123', # use the one you got when creating a client
+  client_params: {
+    mobile_phone: '8881234567',
+    email: 'user@example.com'
+    }
+  }
+)
+
+# Success:
+result.success? # => true
+result.response # => `nil`
+
+# Failure:
+result.success? # => false
+result.response # => `{ errors: { mobile_phone: ['error'] } }`
+```
+
 
 ### Possible Exceptions
 
