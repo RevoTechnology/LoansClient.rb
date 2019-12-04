@@ -132,6 +132,10 @@ class Revo::LoansApi::Client
     make_request(:post, "loan_requests/#{token}/virtual_card")
   end
 
+  def create_card_loan(token:, term_id:)
+    make_request(:post, "loan_requests/#{token}/card_loan", term_id: term_id)
+  end
+
   private
 
   attr_reader :connection, :base_url, :login, :password
