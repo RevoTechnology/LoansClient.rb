@@ -892,4 +892,44 @@ RSpec.describe Revo::LoansApi::Client do
       )
     end
   end
+
+  describe 'create virtual card' do
+    it 'returns success response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'f90f00aed176c1661f56'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('virtual_card/success') do
+        client.create_virtual_card(token: '3440d32b95406a78340fb9bd146f4cf2ef702ea3')
+      end
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: nil
+      )
+    end
+
+    it 'returns unprocessible response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'f90f00aed176c1661f56'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('virtual_card/failure') do
+        client.create_virtual_card(token: '3440d32b95406a78340fb9bd146f4cf2ef702ea3')
+      end
+
+      expect(result).to have_attributes(
+        success?: false,
+        response: {
+          errors: {
+            loan_application: ['не может быть пустым']
+          }
+        }
+      )
+    end
+  end
 end

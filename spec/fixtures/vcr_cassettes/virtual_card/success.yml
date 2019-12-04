@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://revoup.ru/api/loans/v1/loan_requests/3440d32b95406a78340fb9bd146f4cf2ef702ea3/virtual_card
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Authorization:
+      - f90f00aed176c1661f56
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - ALLOWALL
+      Content-Type:
+      - text/html
+      Cache-Control:
+      - no-store, must-revalidate, private, max-age=0
+      X-Request-Id:
+      - dce1d0e5-3dc3-452b-a837-a1ea460b2bfc
+      X-Runtime:
+      - '2.616284'
+      Vary:
+      - Origin
+      X-Miniprofiler-Original-Cache-Control:
+      - no-cache
+      X-Miniprofiler-Ids:
+      - 6j5jm3q10cgbpnqwx8y8,fiamsjcz5tbfivq0v4u7,m32ud69bma27sns7p7id,i2u5hxmya89jmyii52ji,5mmb5jd9fd2eexfx7yn6,bu8y80amlwnpapzx8r1s
+      Content-Length:
+      - '0'
+      Server:
+      - WEBrick/1.4.2 (Ruby/2.5.5/2019-03-15)
+      Date:
+      - Fri, 29 Nov 2019 09:53:53 GMT
+      Connection:
+      - Keep-Alive
+      Set-Cookie:
+      - __profilin=p%3Dt; path=/; HttpOnly
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    http_version: 
+  recorded_at: Fri, 29 Nov 2019 09:53:53 GMT
+recorded_with: VCR 5.0.0

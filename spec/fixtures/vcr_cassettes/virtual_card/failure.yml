@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://revoup.ru/api/loans/v1/loan_requests/3440d32b95406a78340fb9bd146f4cf2ef702ea3/virtual_card
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Authorization:
+      - f90f00aed176c1661f56
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      X-Frame-Options:
+      - ALLOWALL
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - c247a80f-05c5-4282-a589-b1b2389260ca
+      X-Runtime:
+      - '2.961697'
+      Vary:
+      - Origin
+      Server:
+      - WEBrick/1.4.2 (Ruby/2.5.5/2019-03-15)
+      Date:
+      - Fri, 29 Nov 2019 09:57:15 GMT
+      Content-Length:
+      - '73'
+      Connection:
+      - Keep-Alive
+      Set-Cookie:
+      - __profilin=p%3Dt; path=/; HttpOnly
+    body:
+      encoding: UTF-8
+      string: '{"errors":{"loan_application":["не может быть пустым"]}}'
+    http_version: 
+  recorded_at: Fri, 29 Nov 2019 09:57:15 GMT
+recorded_with: VCR 5.0.0
