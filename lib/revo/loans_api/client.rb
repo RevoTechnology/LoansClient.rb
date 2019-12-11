@@ -46,11 +46,15 @@ class Revo::LoansApi::Client
     update_params = { loan_request: options }
     response = make_request(:put, "loan_requests/#{token}", update_params)
 
+    @loan_request_token = token
+
     return response unless response.success?
 
     Result.new(
       success?: true,
-      response: {}
+      response: {
+        terms: loan_request_terms.response[:loan_request]
+      }
     )
   end
 
