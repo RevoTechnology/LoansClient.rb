@@ -173,20 +173,51 @@ RSpec.describe Revo::LoansApi::Client do
 
     it 'return success response' do
       config = {
-        base_url: 'https://backend.qa.revoup.ru/api/loans/v1',
+        base_url: 'https://revoup.ru/api/loans/v1',
         session_token: 'some-token'
       }
-      stub_request(:put, "https://backend.qa.revoup.ru/api/loans/v1/loan_requests/#{token}").to_return(
-        headers: { 'Content-Type': 'application/json' },
-        body: ''
-      )
+
       client = described_class.new(config)
 
-      loan_request_response = client.update_loan_request(token: token, options: { amount: 3_000 })
+      loan_request_response = VCR.use_cassette('loan_request/update/success') do
+        client.update_loan_request(
+          token: 'some-lr-token',
+          options: { amount: 3_000 }
+        )
+      end
 
       expect(loan_request_response).to have_attributes(
         success?: true,
-        response: {}
+        response: {
+          terms: [
+            {
+              term: 3,
+              term_id: 50,
+              monthly_payment: 1073.0,
+              total_of_payments: 3219.0,
+              sum_with_discount: 3000.0,
+              total_overpayment: 219.0,
+              sms_info: 79.0,
+              product_code: '03',
+              min_amount: 1000.0,
+              max_amount: 0.0,
+              schedule: [
+                {
+                  date: '26-11-2018',
+                  amount: 1073.0
+                },
+                {
+                  date: '26-12-2018',
+                  amount: 1073.0
+                },
+                {
+                  date: '27-01-2019',
+                  amount: 1073.0
+                }
+              ]
+            }
+          ]
+        }
       )
     end
 
