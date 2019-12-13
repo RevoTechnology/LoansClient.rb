@@ -49,10 +49,22 @@ class Revo::LoansApi::Client
 
     return response unless response.success?
 
+    @loan_request_token = token
+    terms = loan_request_terms
+    return terms unless terms.success?
+
     Result.new(
       success?: true,
-      response: {}
+      response: {
+        terms: terms.response[:loan_request]
+      }
     )
+  end
+
+  def get_loan_request_info(token:, amount:)
+    result = make_request(:get, "loan_requests/#{token}?amount=#{amount}")
+
+    result.success? ? result.response[:loan_request] : []
   end
 
   # prerequisite: a client with the LR's phone number should already exist
