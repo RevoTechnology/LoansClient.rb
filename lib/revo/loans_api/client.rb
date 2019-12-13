@@ -61,6 +61,12 @@ class Revo::LoansApi::Client
     )
   end
 
+  def get_loan_request_info(token:, amount:)
+    result = make_request(:get, "loan_requests/#{token}?amount=#{amount}")
+
+    result.success? ? result.response[:loan_request] : []
+  end
+
   # prerequisite: a client with the LR's phone number should already exist
   def document(token:, type:, format: 'html')
     make_request(:get, "loan_requests/#{token}/documents/#{type}.#{format}")

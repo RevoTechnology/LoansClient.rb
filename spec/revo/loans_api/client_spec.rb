@@ -171,7 +171,7 @@ RSpec.describe Revo::LoansApi::Client do
   describe 'update loan request' do
     let(:token) { '3440d32b95406a78340fb9bd146f4cf2ef702ea3' }
 
-    it 'return success response' do
+    it 'returns success response' do
       config = {
         base_url: 'https://revoup.ru/api/loans/v1',
         session_token: 'some-token'
@@ -260,6 +260,97 @@ RSpec.describe Revo::LoansApi::Client do
 
         expect {
           client.update_loan_request(token: token, options: { amount: 3_000 })
+        }.to raise_error(Revo::LoansApi::InvalidAccessTokenError)
+      end
+    end
+  end
+
+  describe 'loan info fetching' do
+    context 'when success response' do
+
+      it 'returns loan info' do
+        config = {
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'some-token'
+        }
+
+        client = described_class.new(config)
+
+        loan_info_response = VCR.use_cassette('loan_request/loan_info/success') do
+          client.get_loan_request_info(
+            token: 'some-lr-token',
+            amount: 3_000
+          )
+        end
+
+        expect(loan_info_response).to eq(
+          [
+            {
+              term: 3,
+              term_id: 50,
+              monthly_payment: 1073.0,
+              total_of_payments: 3219.0,
+              sum_with_discount: 3000.0,
+              total_overpayment: 219.0,
+              sms_info: 79.0,
+              product_code: '03',
+              min_amount: 1000.0,
+              max_amount: 0.0,
+              schedule: [
+                {
+                  date: '26-11-2018',
+                  amount: 1073.0
+                },
+                {
+                  date: '26-12-2018',
+                  amount: 1073.0
+                },
+                {
+                  date: '27-01-2019',
+                  amount: 1073.0
+                }
+              ]
+            }
+          ]
+        )
+      end
+    end
+
+    context 'when something is invalid' do
+      it 'returns empty array' do
+        config = {
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'some-session-token'
+        }
+        client = described_class.new(config)
+
+        loan_info_response = VCR.use_cassette('loan_request/loan_info/invalid') do
+          client.get_loan_request_info(
+            token: 'some-lr-token',
+            amount: 3_000
+          )
+        end
+
+        expect(loan_info_response).to eq([])
+      end
+    end
+
+    context 'when `Authorization` header is invalid' do
+      it 'raises `Revo::LoansApi::InvalidAccessTokenError`' do
+        config = {
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'fake'
+        }
+
+        client = described_class.new(config)
+
+        expect {
+          VCR.use_cassette('loan_request/loan_info/invalid_session_token') do
+            client.get_loan_request_info(
+              token: 'some-lr-token',
+              amount: 3_000
+            )
+          end
         }.to raise_error(Revo::LoansApi::InvalidAccessTokenError)
       end
     end

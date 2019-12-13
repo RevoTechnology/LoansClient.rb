@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://revoup.ru/api/loans/v1/loan_requests/some-lr-token?amount=3000
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Authorization:
+      - fake
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - text/html
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 401 Unauthorized
+      X-Frame-Options:
+      - ALLOWALL
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 668801a0-908b-44d6-9228-6466bca9a880
+      - 740fa983bdfce548f1a2cb69007a3246
+      X-Runtime:
+      - '0.007697'
+      Vary:
+      - Origin
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    http_version:
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0
