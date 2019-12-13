@@ -33,13 +33,14 @@ class Revo::LoansApi::Client
     return response unless response.success?
 
     @loan_request_token = response.response.dig(:loan_request, :token)
-    Result.new(
-      success?: true,
-      response: {
-        token: loan_request_token,
-        terms: loan_request_terms.response[:loan_request]
-      }
-    )
+    terms = loan_request_terms
+    return terms unless terms.success?
+
+    Result.new(success?: true,
+               response: {
+                 token: loan_request_token,
+                 terms: terms.response[:loan_request]
+               })
   end
 
   def update_loan_request(token:, options:)
@@ -145,7 +146,10 @@ class Revo::LoansApi::Client
   end
 
   def loan_request_terms(&block)
-    make_request(:get, "loan_requests/#{loan_request_token}", &block)
+    result = make_request(:get, "loan_requests/#{loan_request_token}", &block)
+    return result if result.success?
+
+    Result.new(success?: false, response: { errors: { loan_request_terms: :cant_fetch } })
   end
 
   def make_request(method, endpoint, params = {}, &block)
