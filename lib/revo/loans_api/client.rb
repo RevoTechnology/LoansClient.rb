@@ -39,6 +39,7 @@ class Revo::LoansApi::Client
     Result.new(success?: true,
                response: {
                  token: loan_request_token,
+                 insurance_available: response.response.dig(:loan_request, :insurance_available),
                  terms: terms.response[:loan_request]
                })
   end

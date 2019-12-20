@@ -92,6 +92,7 @@ RSpec.describe Revo::LoansApi::Client do
         success?: true,
         response: {
           token: 'some-lr-token',
+          insurance_available: true,
           terms: [
             {
               term: 3,
