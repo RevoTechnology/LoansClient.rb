@@ -49,7 +49,7 @@ http_interactions:
       - Origin
     body:
       encoding: UTF-8
-      string: '{"loan_request":{"token":"some-lr-token"}}'
+      string: '{"loan_request":{"token":"some-lr-token", "insurance_available":true}}'
     http_version: 
   recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
 - request:
