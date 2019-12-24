@@ -50,7 +50,7 @@ RSpec.describe Revo::LoansApi::Client do
 
         expect(result).to have_attributes(
           success?: false,
-          response: include('DOCTYPE')
+          response: { errors: { base: :unexpected_response } }
         )
       end
     end
