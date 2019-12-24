@@ -152,7 +152,9 @@ class Revo::LoansApi::Client
 
   private
 
-  attr_reader :connection, :base_url, :login, :password
+  API_CONTENT_TYPE = 'application/json'.freeze
+
+  attr_reader :base_url, :login, :password
 
   def connection
     @connection ||= HTTP.persistent(base_url)
@@ -162,15 +164,15 @@ class Revo::LoansApi::Client
     result = make_request(:get, "loan_requests/#{loan_request_token}", &block)
     return result if result.success?
 
-    Result.new(success?: false, response: { errors: { loan_request_terms: :cant_fetch } })
+    Result.new(success?: false, response: { errors: { loan_request_terms: [:cant_fetch] } })
   end
 
   def make_request(method, endpoint, params = {}, &block)
     headers = { Authorization: session_token }.compact
     response = connection.public_send(method, url_for(endpoint), json: params, headers: headers)
     handle_response(response, &block)
-  rescue HTTP::Error => exception
-    handle_error(exception)
+  rescue HTTP::Error => e
+    handle_error(e)
   end
 
   def handle_response(response)
@@ -192,7 +194,7 @@ class Revo::LoansApi::Client
       if response.status.unauthorized?
         raise Revo::LoansApi::InvalidAccessTokenError
       else
-        Result.new(success?: false, response: parse(response))
+        Result.new(success?: false, response: parse_errors(response))
       end
     else
       raise Revo::LoansApi::UnexpectedResponseError, response_or_exception
@@ -203,6 +205,14 @@ class Revo::LoansApi::Client
     response.parse if response.body.present?
   rescue HTTP::Error
     response.to_s.presence
+  end
+
+  def parse_errors(response)
+    if response.content_type.mime_type == API_CONTENT_TYPE
+      parse(response)
+    else
+      { errors: { base: [:unexpected_response] } }
+    end
   end
 
   def url_for(endpoint)
