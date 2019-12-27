@@ -142,8 +142,8 @@ class Revo::LoansApi::Client
     make_request(:patch, "/clients/#{id}", client: client_params)
   end
 
-  def create_virtual_card(token:)
-    make_request(:post, "loan_requests/#{token}/virtual_card")
+  def create_virtual_card(token:, term_id:)
+    make_request(:post, "loan_requests/#{token}/virtual_card", term_id: term_id)
   end
 
   def create_card_loan(token:, term_id:)
