@@ -1126,7 +1126,7 @@ RSpec.describe Revo::LoansApi::Client do
       }
       client = described_class.new(config)
 
-      result = VCR.use_cassette('client/billing_shift/info/success') do
+      result = VCR.use_cassette('client/billing_shift/info/failure') do
         client.billing_shift_info(mobile_phone: '78881234567')
       end
 
