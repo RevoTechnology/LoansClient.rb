@@ -1100,7 +1100,7 @@ RSpec.describe Revo::LoansApi::Client do
   describe 'show billing shift info' do
     it 'returns success response' do
       config = {
-        base_url: 'https://revoup.ru/api/loans/v1',
+        base_url: 'https://backend.st.revoup.ru/api/loans/v1',
         session_token: 'f90f00aed176c1661f56'
       }
       client = described_class.new(config)
@@ -1111,7 +1111,11 @@ RSpec.describe Revo::LoansApi::Client do
 
       expect(result).to have_attributes(
         success?: true,
-        response: nil
+        response: [
+          { billing_chain: 4, date: '2020-02-26' },
+          { billing_chain: 1, date: '2020-03-02' },
+          { billing_chain: 2, date: '2020-03-10' }
+        ]
       )
     end
 

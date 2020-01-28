@@ -151,7 +151,7 @@ class Revo::LoansApi::Client
   end
 
   def billing_shift_info(mobile_phone:)
-    make_request(:get, 'clients/billing_shift/info', mobile_phone: mobile_phone)
+    make_request(:get, "clients/billing_shift/info?mobile_phone=#{mobile_phone}")
   end
 
   private

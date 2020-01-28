@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: get
-    uri: https://revoup.ru/api/loans/v1/clients/billing_shift/info
+    uri: https://backend.st.revoup.ru/api/loans/v1/clients/billing_shift/info?mobile_phone=78881234567
     body:
       encoding: UTF-8
-      string: '{"mobile_phone":"78881234567"}'
+      string: "{}"
     headers:
       Authorization:
       - f90f00aed176c1661f56
@@ -14,32 +14,36 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Host:
-      - revoup.ru
+      - backend.st.revoup.ru
       User-Agent:
       - http.rb/4.3.0
   response:
     status:
-      code: 301
-      message: Moved Permanently
+      code: 200
+      message: OK
     headers:
       Server:
       - nginx
       Date:
-      - Mon, 27 Jan 2020 14:14:00 GMT
+      - Tue, 28 Jan 2020 10:41:47 GMT
       Content-Type:
-      - text/html
-      Content-Length:
-      - '162'
+      - application/json
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
-      Location:
-      - https://revo.ru/api/loans/v1/clients/billing_shift/info
+      X-Frame-Options:
+      - ALLOWALL
       X-Request-Id:
-      - be8d77f3c139b5bfbd6ea69ee67e5700
+      - 25a7d44c179fd104c0ebfa9be78e7078
+      - 32b08bdb-e452-4722-bd17-e46a41c36807
+      X-Runtime:
+      - '0.020649'
+      Vary:
+      - Origin
     body:
-      encoding: ASCII-8BIT
-      string: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body>\r\n<center><h1>301
-        Moved Permanently</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
-    http_version: 
-  recorded_at: Mon, 27 Jan 2020 14:14:00 GMT
+      encoding: UTF-8
+      string: '[{"billing_chain":4,"date":"2020-02-26"},{"billing_chain":1,"date":"2020-03-02"},{"billing_chain":2,"date":"2020-03-10"}]'
+    http_version:
+  recorded_at: Tue, 28 Jan 2020 10:41:46 GMT
 recorded_with: VCR 5.0.0
