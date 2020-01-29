@@ -150,6 +150,10 @@ class Revo::LoansApi::Client
     make_request(:post, "loan_requests/#{token}/card_loan", term_id: term_id)
   end
 
+  def billing_shift_info(mobile_phone:)
+    make_request(:get, "clients/billing_shift/info?mobile_phone=#{mobile_phone}")
+  end
+
   private
 
   API_CONTENT_TYPE = 'application/json'.freeze
