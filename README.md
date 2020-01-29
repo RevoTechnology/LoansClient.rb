@@ -448,6 +448,25 @@ result.response # => `{ errors: { mobile_phone: ['error'] } }`
 ```
 
 
+### Info about billing shift
+
+
+```ruby
+result = client.billing_shift_info(mobile_phone: '8881234567')
+# Success:
+result.success? # => true
+result.response # => =>
+# [
+#   { billing_chain: 4, date: '2020-02-26' },
+#   { billing_chain: 1, date: '2020-03-02' },
+#   { billing_chain: 2, date: '2020-03-10' }
+# ]
+# Failure:
+result.success? # => false
+result.response # => `{ errors: { mobile_phone: ['error'] } }`
+```
+
+
 ### Possible Exceptions
 
 In case of generic HTTP errors (i.e. server is not reachable or network is down), `Revo::LoansApi::UnexpectedResponseError` will be raised.
