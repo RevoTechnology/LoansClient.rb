@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://revoup.ru/api/loans/v1/clients/11596/limit
+    body:
+      encoding: UTF-8
+      string: '{"amount":30000}'
+    headers:
+      Authorization:
+      - 727d0f44df62125874d4
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.3.0
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      X-Frame-Options:
+      - ALLOWALL
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 5be51c62-fb14-4fff-b429-f512dab5a157
+      X-Runtime:
+      - '0.763435'
+      Vary:
+      - Origin
+      Set-Cookie:
+      - __profilin=p%3Dt; path=/; HttpOnly
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"errors":{"client":["Вам недоступно изменение лимита","У вас уже имеется
+        необработанный запрос"]}}'
+    http_version:
+  recorded_at: Wed, 29 Jan 2020 22:01:17 GMT
+recorded_with: VCR 5.0.0

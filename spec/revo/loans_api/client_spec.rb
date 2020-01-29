@@ -1140,4 +1140,51 @@ RSpec.describe Revo::LoansApi::Client do
       )
     end
   end
+
+  describe 'increases client limit' do
+    it 'returns success response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: '727d0f44df62125874d4'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('client/limit/success') do
+        client.increase_client_limit(client_id: 11596, amount: 30000)
+      end
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: {
+          status: 'ok',
+          decision: 'accepted',
+          limit: '30000',
+          message: 'Поздравляем! Мы ценим наших добросовестных клиентов, поэтому приняли решение ' \
+                   'увеличить вам лимит до 30000 ₽. Прямо сейчас вы можете начать совершать покупки ' \
+                   'на всю доступную сумму.'
+        }
+      )
+    end
+
+    it 'returns unprocessable_entity response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: '727d0f44df62125874d4'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('client/limit/failure') do
+        client.increase_client_limit(client_id: 11596, amount: 30000)
+      end
+
+      expect(result).to have_attributes(
+        success?: false,
+        response: {
+          errors: {
+            client: ['Вам недоступно изменение лимита', 'У вас уже имеется необработанный запрос']
+          }
+        }
+      )
+    end
+  end
 end

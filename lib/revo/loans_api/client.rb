@@ -154,6 +154,10 @@ class Revo::LoansApi::Client
     make_request(:get, "clients/billing_shift/info?mobile_phone=#{mobile_phone}")
   end
 
+  def increase_client_limit(client_id:, amount:)
+    make_request(:patch, "clients/#{client_id}/limit", amount: amount)
+  end
+
   private
 
   API_CONTENT_TYPE = 'application/json'.freeze
