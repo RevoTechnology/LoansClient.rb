@@ -448,6 +448,21 @@ result.response # => `{ errors: { mobile_phone: ['error'] } }`
 ```
 
 
+### Send billing shift confirmation code
+
+
+```ruby
+result = client.send_billing_shift_confirmation_code(mobile_phone: '8881234567')
+
+# Success:
+result.success? # => true
+result.response # => `nil`
+# Failure:
+result.success? # => false
+result.response # => `{ errors: { mobile_phone: ['error'] } }`
+```
+
+
 ### Info about billing shift
 
 
