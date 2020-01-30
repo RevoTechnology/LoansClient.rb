@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://backend.st.revoup.ru/api/loans/v1/clients/billing_shift
+    body:
+      encoding: UTF-8
+      string: '{"mobile_phone":"78881234567"}'
+    headers:
+      Authorization:
+      - f90f00aed176c1661f56
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - backend.st.revoup.ru
+      User-Agent:
+      - http.rb/4.3.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 29 Jan 2020 13:25:46 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - ALLOWALL
+      X-Request-Id:
+      - 4e7f790b-87eb-4b7c-9d9f-d28f4ee5bc09
+      - 7944ab497155985e0b56303186d00505
+      X-Runtime:
+      - '0.022290'
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Wed, 29 Jan 2020 13:25:46 GMT
+recorded_with: VCR 5.0.0
