@@ -1,5 +1,5 @@
 module Revo
   module LoansApi
-    VERSION = '0.0.11'.freeze
+    VERSION = '0.0.13'.freeze
   end
 end
