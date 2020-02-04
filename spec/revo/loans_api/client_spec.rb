@@ -1106,7 +1106,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('client/billing_shift/send_code/success') do
-        client.send_billing_shift_confirmation_code(id: 1)
+        client.send_billing_shift_confirmation_code(client_id: 1)
       end
 
       expect(result).to have_attributes(
@@ -1123,7 +1123,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('client/billing_shift/send_code/failure') do
-        client.send_billing_shift_confirmation_code(id: 1)
+        client.send_billing_shift_confirmation_code(client_id: 1)
       end
 
       expect(result).to have_attributes(
@@ -1146,7 +1146,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('client/billing_shift/info/success') do
-        client.billing_shift_info(id: 1)
+        client.billing_shift_info(client_id: 1)
       end
 
       expect(result).to have_attributes(
@@ -1167,7 +1167,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('client/billing_shift/info/failure') do
-        client.billing_shift_info(id: 1)
+        client.billing_shift_info(client_id: 1)
       end
 
       expect(result).to have_attributes(
@@ -1190,7 +1190,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('client/billing_shift/confirm/success') do
-        client.confirm_billing_shift(id: 1, code: '1111', billing_chain: 1)
+        client.confirm_billing_shift(client_id: 1, code: '1111', billing_chain: 1)
       end
 
       expect(result).to have_attributes(
@@ -1207,7 +1207,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('client/billing_shift/confirm/failure') do
-        client.confirm_billing_shift(id: 1, code: '1111', billing_chain: 1)
+        client.confirm_billing_shift(client_id: 1, code: '1111', billing_chain: 1)
       end
 
       expect(result).to have_attributes(
