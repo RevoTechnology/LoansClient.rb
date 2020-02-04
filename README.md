@@ -444,7 +444,7 @@ result.response # => `nil`
 
 # Failure:
 result.success? # => false
-result.response # => `{ errors: { mobile_phone: ['error'] } }`
+result.response # => `{ errors: { client: ['error'] } }`
 ```
 
 
@@ -459,7 +459,7 @@ result.success? # => true
 result.response # => `nil`
 # Failure:
 result.success? # => false
-result.response # => `{ errors: { mobile_phone: ['error'] } }`
+result.response # => `{ errors: { client: ['error'] } }`
 ```
 
 
@@ -478,7 +478,7 @@ result.response # => =>
 # ]
 # Failure:
 result.success? # => false
-result.response # => `{ errors: { mobile_phone: ['error'] } }`
+result.response # => `{ errors: { client: ['error'] } }`
 ```
 
 
