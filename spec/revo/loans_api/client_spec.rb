@@ -1106,7 +1106,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('client/billing_shift/send_code/success') do
-        client.send_billing_shift_confirmation_code(mobile_phone: '78881234567')
+        client.send_billing_shift_confirmation_code(client_id: 1)
       end
 
       expect(result).to have_attributes(
@@ -1123,7 +1123,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('client/billing_shift/send_code/failure') do
-        client.send_billing_shift_confirmation_code(mobile_phone: '78881234567')
+        client.send_billing_shift_confirmation_code(client_id: 1)
       end
 
       expect(result).to have_attributes(
@@ -1146,7 +1146,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('client/billing_shift/info/success') do
-        client.billing_shift_info(mobile_phone: '78881234567')
+        client.billing_shift_info(client_id: 1)
       end
 
       expect(result).to have_attributes(
@@ -1167,7 +1167,47 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('client/billing_shift/info/failure') do
-        client.billing_shift_info(mobile_phone: '78881234567')
+        client.billing_shift_info(client_id: 1)
+      end
+
+      expect(result).to have_attributes(
+        success?: false,
+        response: {
+          errors: {
+            base: [:unexpected_response]
+          }
+        }
+      )
+    end
+  end
+
+  describe '#confirm_billing_shift' do
+    it 'returns success response' do
+      config = {
+        base_url: 'https://backend.st.revoup.ru/api/loans/v1',
+        session_token: 'f90f00aed176c1661f56'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('client/billing_shift/confirm/success') do
+        client.confirm_billing_shift(client_id: 1, code: '1111', billing_chain: 1)
+      end
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: nil
+      )
+    end
+
+    it 'returns unprocessible response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'f90f00aed176c1661f56'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('client/billing_shift/confirm/failure') do
+        client.confirm_billing_shift(client_id: 1, code: '1111', billing_chain: 1)
       end
 
       expect(result).to have_attributes(

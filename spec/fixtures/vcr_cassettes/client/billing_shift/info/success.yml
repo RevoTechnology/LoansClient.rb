@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://backend.st.revoup.ru/api/loans/v1/clients/billing_shift/info?mobile_phone=78881234567
+    uri: https://backend.st.revoup.ru/api/loans/v1/clients/1/billing_shift/info
     body:
       encoding: UTF-8
       string: "{}"

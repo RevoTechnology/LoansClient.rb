@@ -452,14 +452,14 @@ result.response # => `{ errors: { mobile_phone: ['error'] } }`
 
 
 ```ruby
-result = client.send_billing_shift_confirmation_code(mobile_phone: '8881234567')
+result = client.send_billing_shift_confirmation_code(client_id: 1)
 
 # Success:
 result.success? # => true
 result.response # => `nil`
 # Failure:
 result.success? # => false
-result.response # => `{ errors: { mobile_phone: ['error'] } }`
+result.response # => `{ errors: { client: ['error'] } }`
 ```
 
 
@@ -467,7 +467,7 @@ result.response # => `{ errors: { mobile_phone: ['error'] } }`
 
 
 ```ruby
-result = client.billing_shift_info(mobile_phone: '8881234567')
+result = client.billing_shift_info(client_id: 1)
 # Success:
 result.success? # => true
 result.response # => =>
@@ -478,7 +478,21 @@ result.response # => =>
 # ]
 # Failure:
 result.success? # => false
-result.response # => `{ errors: { mobile_phone: ['error'] } }`
+result.response # => `{ errors: { client: ['error'] } }`
+```
+
+
+### Confirm billing shift
+
+
+```ruby
+result = client.confirm_billing_shift(client_id: 1, code: '1111', billing_chain: 1)
+# Success:
+result.success? # => true
+result.response # => `nil`
+# Failure:
+result.success? # => false
+result.response # => `{ errors: { client: ['error'] } }`
 ```
 
 
