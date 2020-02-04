@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://revoup.ru/api/loans/v1/clients/billing_shift/confirmation
+    uri: https://revoup.ru/api/loans/v1/clients/1/billing_shift/confirmation
     body:
       encoding: UTF-8
-      string: '{"mobile_phone":"78881234567","code":"1111","billing_chain":1}'
+      string: '{"code":"1111","billing_chain":1}'
     headers:
       Authorization:
       - f90f00aed176c1661f56
@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Location:
-      - https://revo.ru/api/loans/v1/clients/billing_shift
+      - https://revo.ru/api/loans/v1/clients/1/billing_shift
       X-Request-Id:
       - 2cf641c9bfddf7ea641cee8fc741201d
     body:

@@ -150,17 +150,17 @@ class Revo::LoansApi::Client
     make_request(:post, "loan_requests/#{token}/card_loan", term_id: term_id)
   end
 
-  def send_billing_shift_confirmation_code(mobile_phone:)
-    make_request(:post, 'clients/billing_shift', mobile_phone: mobile_phone)
+  def send_billing_shift_confirmation_code(id:)
+    make_request(:post, "clients/#{id}/billing_shift")
   end
 
-  def billing_shift_info(mobile_phone:)
-    make_request(:get, "clients/billing_shift/info?mobile_phone=#{mobile_phone}")
+  def billing_shift_info(id:)
+    make_request(:get, "clients/#{id}/billing_shift/info")
   end
 
-  def confirm_billing_shift(mobile_phone:, code:, billing_chain:)
-    make_request(:post, 'clients/billing_shift/confirmation',
-                 mobile_phone: mobile_phone, code: code, billing_chain: billing_chain)
+  def confirm_billing_shift(id:, code:, billing_chain:)
+    make_request(:post, "clients/#{id}/billing_shift/confirmation",
+                 code: code, billing_chain: billing_chain)
   end
 
   private

@@ -2,10 +2,10 @@
   http_interactions:
   - request:
       method: post
-      uri: https://backend.st.revoup.ru/api/loans/v1/clients/billing_shift/confirmation
+      uri: https://backend.st.revoup.ru/api/loans/v1/clients/1/billing_shift/confirmation
       body:
         encoding: UTF-8
-        string: '{"mobile_phone":"78881234567","code":"1111","billing_chain":1}'
+        string: '{"code":"1111","billing_chain":1}'
       headers:
         Authorization:
         - f90f00aed176c1661f56
