@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://revoup.ru/api/loans/v1/loan_requests/some-lr-token/loan/bill
+    body:
+      encoding: UTF-8
+      string: '{"token": "some-lr-token","loan": {"bill":true}}'
+    headers:
+      Authorization:
+      - some-session-token
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 201 Created
+      X-Frame-Options:
+      - ALLOWALL
+      Etag:
+      - W/"9fbe686998e4de8ce898ed91615374de"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 946b6bb8759d4974e4e16f20848795d2
+      - aa0ffdc7-09c8-4683-9418-979829e2b3e9
+      X-Runtime:
+      - '0.119946'
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: '{"status": "confirmed", "offer_id": "922712902"}'
+    http_version:
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0
