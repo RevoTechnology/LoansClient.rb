@@ -1041,7 +1041,7 @@ RSpec.describe Revo::LoansApi::Client do
             name: 'Иван',
             surname: 'Иванов',
             personal_identification: '',
-            'phone_number': '9999999999'
+            phone_number: '9999999999'
           }
         }
       )
