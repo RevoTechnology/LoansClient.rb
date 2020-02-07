@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://revoup.ru/api/loans/v1//clients/738796032
+    headers:
+      Authorization:
+      - f90f00aed176c1661f56
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - ALLOWALL
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-store, must-revalidate, private, max-age=0
+      X-Request-Id:
+      - ffb399f8-ebe1-48fe-b237-7d2cba8616d4
+      X-Runtime:
+      - '0.613716'
+      Vary:
+      - Origin
+      X-Miniprofiler-Original-Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Miniprofiler-Ids:
+      - k0f18nt50fs37cmaoufz,df2u0rm09rm56ege04kc,pirlt0jxq8xw120n96jw,he7ttgyetjagtglijka1,yu2ztm02zcpcp3zkdnbz,ltl0hajnoyuzap7x2bkf,marya012ind6l0bzg0kw,llqbga4indb2z7exvodd,b2or5rkg4sngku2d2jcs,aozddp8mowpiw0ix10o8,e2wgzn2ek3ouq4zfx3dj,4v26n6lapkgw629otgg4,jtfs52d97wtqjtsqw4h5,a7um6xh9tnvbizt6f157,j9lp95av4locgg6vaenl,w22uh06u0j81j5d17399,h2llf4ab7gkwiypp4d98,bizl89cuidmz978pdmt8,9zvr379v6qa19sgqrnl6,xl63idlg1l1vlqfspzn4
+      Server:
+      - WEBrick/1.4.2 (Ruby/2.5.5/2019-03-15)
+      Date:
+      - Thu, 21 Nov 2019 10:06:30 GMT
+      Content-Length:
+      - '658'
+      Connection:
+      - Keep-Alive
+      Set-Cookie:
+      - __profilin=p%3Dt; path=/; HttpOnly
+    body:
+      encoding: UTF-8
+      string: '{"client":{"address_street_actual":"г. Урюпинск, ул. Ленина, д. 13","age":"38","birth_date":"1981-11-11","documents":{"asp":"http://asp_url"},"email":"zzz2221zzzzz@zzz.zzz","gender":"male","name":"Иван","surname":"Иванов","personal_identification":"","phone_number":"9999999999"}}'
+    http_version:
+  recorded_at: Fri, 29 Nov 2019 07:53:14 GMT
+recorded_with: VCR 5.0.0

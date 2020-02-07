@@ -922,7 +922,7 @@ RSpec.describe Revo::LoansApi::Client do
         }
       }
 
-      result = VCR.use_cassette('client/success') do
+      result = VCR.use_cassette('client/create/success') do
         client.create_client(
           token: '3440d32b95406a78340fb9bd146f4cf2ef702ea3',
           client_params: client_params
@@ -946,7 +946,7 @@ RSpec.describe Revo::LoansApi::Client do
             apartment: '123',
             postal_code: '12345',
             credit_limit: nil,
-            missing_documents: ['name', 'client_with_passport', 'living_addr'],
+            missing_documents: %w[name client_with_passport living_addr],
             id_documents: {
               russian_passport: {
                 number: '123456',
@@ -972,7 +972,7 @@ RSpec.describe Revo::LoansApi::Client do
       }
       client = described_class.new(config)
 
-      result = VCR.use_cassette('client/updater/success') do
+      result = VCR.use_cassette('client/update/success') do
         client.update_client(
           id: '18141',
           client_params: {
@@ -995,7 +995,7 @@ RSpec.describe Revo::LoansApi::Client do
       }
       client = described_class.new(config)
 
-      result = VCR.use_cassette('client/updater/failure') do
+      result = VCR.use_cassette('client/update/failure') do
         client.update_client(
           id: '18141',
           client_params: {
@@ -1013,6 +1013,57 @@ RSpec.describe Revo::LoansApi::Client do
           }
         }
       )
+    end
+  end
+
+  describe 'get client' do
+    it 'returns success response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'f90f00aed176c1661f56'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('client/show/success') do
+        client.get_client(guid: '738796032')
+      end
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: {
+          client: {
+            address_street_actual: 'г. Урюпинск, ул. Ленина, д. 13',
+            age: '38',
+            birth_date: '1981-11-11',
+            documents: { asp: 'http://asp_url' },
+            email: 'zzz2221zzzzz@zzz.zzz',
+            gender: 'male',
+            name: 'Иван',
+            surname: 'Иванов',
+            personal_identification: '',
+            'phone_number': '9999999999'
+          }
+        }
+      )
+    end
+
+    context 'when invalid guid' do
+      it 'returns error' do
+        config = {
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'f90f00aed176c1661f56'
+        }
+        client = described_class.new(config)
+
+        result = VCR.use_cassette('client/show/invalid') do
+          client.get_client(guid: 'invalid_guid')
+        end
+
+        expect(result).to have_attributes(
+          success?: false,
+          response: { errors: { base: ['unexpected_response'] } }
+        )
+      end
     end
   end
 
