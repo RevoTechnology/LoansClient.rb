@@ -95,6 +95,15 @@ class Revo::LoansApi::Client
     make_request(:post, "loan_requests/#{token}/loan/finalization", loan: loan_params)
   end
 
+  def confirm_loan(token:, bill:)
+    params = { loan: { bill: bill } }
+    response = make_request(:put, "loan_requests/#{token}/loan/bill", params)
+
+    return response unless response.success?
+
+    Result.new(success?: true, response: response.response)
+  end
+
   # returns
   def orders(store_id:, filters: {})
     make_request(:get, 'orders', store_id: store_id, filters: filters)

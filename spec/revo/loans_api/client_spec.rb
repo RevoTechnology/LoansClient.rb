@@ -266,9 +266,54 @@ RSpec.describe Revo::LoansApi::Client do
     end
   end
 
+  describe 'confirm loan' do
+    it 'returns success response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'some-token'
+      }
+
+      client = described_class.new(config)
+
+      resp = VCR.use_cassette('loan/confirmation/success') do
+        client.confirm_loan(
+          token: 'some-lr-token',
+          bill: true
+        )
+      end
+
+      expect(resp).to have_attributes(
+        success?: true,
+        response: { status: 'confirmed', offer_id: '922712902' }
+      )
+    end
+
+    context 'when something is invalid' do
+      it 'returns a list of errors' do
+        config = {
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'some-token'
+        }
+
+        client = described_class.new(config)
+
+        resp = VCR.use_cassette('loan/confirmation/invalid') do
+          client.confirm_loan(
+            token: 'some-lr-token',
+            bill: true
+          )
+        end
+
+        expect(resp).to have_attributes(
+          success?: false,
+          response: { errors: { base: ['unexpected_response'] } }
+        )
+      end
+    end
+  end
+
   describe 'loan info fetching' do
     context 'when success response' do
-
       it 'returns loan info' do
         config = {
           base_url: 'https://revoup.ru/api/loans/v1',
