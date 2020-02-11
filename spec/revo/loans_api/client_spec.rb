@@ -278,7 +278,7 @@ RSpec.describe Revo::LoansApi::Client do
       resp = VCR.use_cassette('loan/confirmation/success') do
         client.confirm_loan(
           token: 'some-lr-token',
-          options: { bill: true }
+          bill: true
         )
       end
 
@@ -300,7 +300,7 @@ RSpec.describe Revo::LoansApi::Client do
         resp = VCR.use_cassette('loan/confirmation/invalid') do
           client.confirm_loan(
             token: 'some-lr-token',
-            options: { bill: true }
+            bill: true
           )
         end
 
