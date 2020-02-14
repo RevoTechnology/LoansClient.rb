@@ -133,9 +133,9 @@ class Revo::LoansApi::Client
     make_request(:post, "returns/#{return_id}/cancel")
   end
 
-  def start_self_registration(token:, mobile_phone:)
+  def start_self_registration(token:, mobile_phone:, skip_message: false)
     make_request(:post, "loan_requests/#{token}/client/self_registration",
-                 mobile_phone: mobile_phone)
+                 mobile_phone: mobile_phone, skip_message: skip_message)
   end
 
   def check_client_code(token:, code:)
