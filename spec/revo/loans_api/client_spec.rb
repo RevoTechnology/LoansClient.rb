@@ -868,7 +868,8 @@ RSpec.describe Revo::LoansApi::Client do
       result = VCR.use_cassette('client/self_registration/success') do
         client.start_self_registration(
           token: '3440d32b95406a78340fb9bd146f4cf2ef702ea3',
-          mobile_phone: '78882223344'
+          mobile_phone: '78882223344',
+          skip_message: false
         )
       end
 
