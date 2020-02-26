@@ -194,7 +194,7 @@ class Revo::LoansApi::Client
     result = make_request(:get, "loan_requests/#{loan_request_token}", &block)
     return result if result.success?
 
-    Result.new(success?: false, response: { errors: { loan_request_terms: [:cant_fetch] } })
+    Result.new(success?: false, response: { errors: { base: [:cant_fetch_loan_request_terms] } })
   end
 
   def make_request(method, endpoint, params = {}, &block)
