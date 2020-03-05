@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://revoup.ru/api/loans/v1/clients/11596/loans/1525023
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Authorization:
+      - 727d0f44df62125874d4
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.3.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - ALLOWALL
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-store, must-revalidate, private, max-age=0
+      X-Request-Id:
+      - 076b3e7c-0ff1-4f27-a5d5-191a64a873d7
+      X-Runtime:
+      - '3.405722'
+      Vary:
+      - Origin
+      X-Miniprofiler-Original-Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Miniprofiler-Ids:
+      - z0y358ayu9yny83kivus,5mgbu2ziq0zb2o2lgow,yvg5fxnmhrliqpr6m1du,6f90jq5oz26dnyhg6uxl,3ansk777yfgmubc8tkd0,tqyzr18otdpf4i2ir0jp,9yg6fmub4ehgam4807jy,cyipg99dplz51rjpdbyx,607k2hw0vrixse1lyyo,bn5p774gzgra86tvscg7,fax7lww1wvxt5exoee07,eywqmwpq8x0id3hnk1wa,s9cvhz8lcdjbls7muhgg,6mfk2joorl164wv7t8r6,zhwtrllcg6v7ha2tszxa,m6sim6ila2bsyg3oa1sb,ybmmjmc1ak7g5q98130g,jwwke3rueutomh2vl7y7,t4o2crp3aph87kgy2hmc,4opa4vlexrvxepp3bhq8
+      Set-Cookie:
+      - __profilin=p%3Dt; path=/; HttpOnly
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"id":1525023,"guid":"151229017","documents":{}}'
+    http_version:
+  recorded_at: Thu, 05 Mar 2020 18:56:22 GMT
+recorded_with: VCR 5.0.0

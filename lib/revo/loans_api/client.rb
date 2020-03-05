@@ -180,6 +180,10 @@ class Revo::LoansApi::Client
     make_request(:patch, "clients/#{client_id}/limit", amount: amount)
   end
 
+  def client_loan_documents(client_id:, loan_application_id:)
+    make_request(:get, "clients/#{client_id}/loans/#{loan_application_id}")
+  end
+
   private
 
   API_CONTENT_TYPE = 'application/json'.freeze

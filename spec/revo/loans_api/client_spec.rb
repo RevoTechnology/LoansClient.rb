@@ -1364,4 +1364,27 @@ RSpec.describe Revo::LoansApi::Client do
       )
     end
   end
+
+  describe 'clients loan info' do
+    it 'returns success response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: '727d0f44df62125874d4'
+      }
+      client = described_class.new(config)
+
+      result = VCR.use_cassette('client/loan/info/success') do
+        client.client_loan_documents(client_id: 115_96, loan_application_id: 152_502_3)
+      end
+
+      expect(result).to have_attributes(
+        success?: true,
+        response: {
+          id: 1525023,
+          guid: '151229017',
+          documents: {}
+        }
+      )
+    end
+  end
 end
