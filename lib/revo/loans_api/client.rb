@@ -184,6 +184,14 @@ class Revo::LoansApi::Client
     make_request(:get, "clients/#{client_id}/loans/#{loan_application_id}")
   end
 
+  def get_client_notification_services(client_id:)
+    make_request(:get, "clients/#{client_id}/notification_services")
+  end
+
+  def update_client_notification_services(client_id:, notification_services:)
+    make_request(:patch, "clients/#{client_id}/notification_services", notification_services)
+  end
+
   private
 
   API_CONTENT_TYPE = 'application/json'.freeze

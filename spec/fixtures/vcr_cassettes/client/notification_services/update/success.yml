@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://revoup.ru/api/loans/v1/clients/11596/notification_services
+    body:
+      encoding: UTF-8
+      string: '{"sms_info":true}'
+    headers:
+      Authorization:
+      - 727d0f44df62125874d4
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.3.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - ALLOWALL
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-store, must-revalidate, private, max-age=0
+      X-Request-Id:
+      - da045c5a-bed8-4084-9848-3f4e2af3d132
+      X-Runtime:
+      - '0.067880'
+      Vary:
+      - Origin
+      X-Miniprofiler-Original-Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Miniprofiler-Ids:
+      - gsnftzmthsbscg2i01f5,3wicl9525kp5re62oxd3,wcjz8nlurc98gi7c5g28,o7gxfkxt8wsqt57yu3n4,myy9l4zijat65q2cnjhs,pau3p8ucpsolqbqn6wwh,30m5pfv7cxvkqdm3go6t,yilftwwcnbbkvlc661jj,rhx1os1zr0jn3qcgdj7i,9xdaocaub4favfvhtked,kjtgeek7ckz0lhppnd54,t87osfg9u2ldhfutow3,3858336caxkbc8gksgri,xapgx2p1nwejoo4q8w1p,6hi8evtcz52oq7vtqszi
+      Set-Cookie:
+      - __profilin=p%3Dt; path=/; HttpOnly
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"sms_info":true}'
+    http_version: 
+  recorded_at: Fri, 13 Mar 2020 10:34:39 GMT
+recorded_with: VCR 5.0.0
