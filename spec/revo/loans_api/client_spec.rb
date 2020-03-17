@@ -1388,7 +1388,7 @@ RSpec.describe Revo::LoansApi::Client do
     end
   end
 
-  describe 'clients notification_services getting' do
+  describe 'clients additional_services getting' do
     it 'returns success response' do
       config = {
         base_url: 'https://revoup.ru/api/loans/v1',
@@ -1396,8 +1396,8 @@ RSpec.describe Revo::LoansApi::Client do
       }
       client = described_class.new(config)
 
-      result = VCR.use_cassette('client/notification_services/show/success') do
-        client.get_client_notification_services(client_id: 11_596)
+      result = VCR.use_cassette('client/additional_services/show/success') do
+        client.get_client_additional_services(client_id: 11_596)
       end
 
       expect(result).to have_attributes(
@@ -1415,10 +1415,10 @@ RSpec.describe Revo::LoansApi::Client do
       }
       client = described_class.new(config)
 
-      result = VCR.use_cassette('client/notification_services/update/success') do
-        client.update_client_notification_services(
+      result = VCR.use_cassette('client/additional_services/update/success') do
+        client.update_client_additional_services(
           client_id: 11_596,
-          notification_services: { sms_info: true }
+          additional_services: { sms_info: true }
         )
       end
 

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: patch
-    uri: https://revoup.ru/api/loans/v1/clients/11596/notification_services
+    uri: https://revoup.ru/api/loans/v1/clients/11596/additional_services
     body:
       encoding: UTF-8
       string: '{"sms_info":true}'
