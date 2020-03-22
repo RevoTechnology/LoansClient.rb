@@ -85,12 +85,17 @@ class Revo::LoansApi::Client
     make_request(:post, "loan_requests/#{token}/loan", term_id: term_id)
   end
 
-  def finalize_loan(token:, code:, sms_info: '0')
+  def finalize_loan(token:, code:, sms_info: '0', skip_confirmation: false)
     loan_params = {
       agree_processing: '1',
       confirmation_code: code,
       agree_sms_info: sms_info
     }
+
+    if skip_confirmation
+      loan_params[:skip_confirmation] = true
+      loan_params.delete(:confirmation_code)
+    end
 
     make_request(:post, "loan_requests/#{token}/loan/finalization", loan: loan_params)
   end
