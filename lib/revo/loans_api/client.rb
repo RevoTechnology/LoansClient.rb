@@ -153,11 +153,11 @@ class Revo::LoansApi::Client
   end
 
   def update_client(id:, client_params:)
-    make_request(:patch, "/clients/#{id}", client: client_params)
+    make_request(:patch, "clients/#{id}", client: client_params)
   end
 
   def get_client(guid:)
-    make_request(:get, "/clients/#{guid}")
+    make_request(:get, "clients/#{guid}")
   end
 
   def create_virtual_card(token:, term_id:)
