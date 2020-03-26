@@ -1,6 +1,5 @@
 require 'http'
 require 'active_support/core_ext/object/blank'
-require 'byebug'
 
 class HTTP::MimeType::JSON
   def decode(str)
