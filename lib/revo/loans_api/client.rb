@@ -12,24 +12,35 @@ class Revo::LoansApi::Client
 
   Result = Struct.new(:success?, :response, keyword_init: true)
 
-  def initialize(base_url:, login: nil, password: nil, session_token: nil)
+  def initialize(
+    base_url:,
+    login: nil,
+    password: nil,
+    session_token: nil,
+    application_source: nil
+  )
     @base_url = base_url
     @login = login
     @password = password
     @session_token = session_token
+    @application_source = application_source
   end
 
   def create_session
     make_request(
       :post, 'sessions',
-      user: { login: login, password: password }
+      params: { user: { login: login, password: password } }
     ).tap do |result|
       @session_token = result.response.dig(:user, :authentication_token) if result&.success?
     end
   end
 
   def create_loan_request(options)
-    response = make_request(:post, 'loan_requests', loan_request_params(options))
+    response = make_request(
+      :post,
+      'loan_requests',
+      params: loan_request_params(options)
+    )
     return response unless response.success?
 
     @loan_request_token = response.response.dig(:loan_request, :token)
@@ -46,7 +57,11 @@ class Revo::LoansApi::Client
 
   def update_loan_request(token:, options:)
     update_params = { loan_request: options }
-    response = make_request(:put, "loan_requests/#{token}", update_params)
+    response = make_request(
+      :put,
+      "loan_requests/#{token}",
+      params: update_params
+    )
 
     return response unless response.success?
 
@@ -78,11 +93,20 @@ class Revo::LoansApi::Client
   end
 
   def complete_loan_request(token:, code:)
-    make_request(:post, "loan_requests/#{token}/confirmation", code: code)
+    make_request(
+      :post,
+      "loan_requests/#{token}/confirmation",
+      params: { code: code }
+    )
   end
 
   def create_loan(token:, term_id:)
-    make_request(:post, "loan_requests/#{token}/loan", term_id: term_id)
+    make_request(
+      :post,
+      "loan_requests/#{token}/loan",
+      params: { term_id: term_id },
+      headers: { 'Application-Source': application_source }
+    )
   end
 
   def finalize_loan(token:, code:, sms_info: '0', skip_confirmation: false)
@@ -97,12 +121,19 @@ class Revo::LoansApi::Client
       loan_params.delete(:confirmation_code)
     end
 
-    make_request(:post, "loan_requests/#{token}/loan/finalization", loan: loan_params)
+    make_request(
+      :post,
+      "loan_requests/#{token}/loan/finalization",
+      params: { loan: loan_params }
+    )
   end
 
   def confirm_loan(token:, bill:)
-    params = { loan: { bill: bill } }
-    response = make_request(:put, "loan_requests/#{token}/loan/bill", params)
+    response = make_request(
+      :put,
+      "loan_requests/#{token}/loan/bill",
+      params: { loan: { bill: bill } }
+    )
 
     return response unless response.success?
 
@@ -111,7 +142,11 @@ class Revo::LoansApi::Client
 
   # returns
   def orders(store_id:, filters: {})
-    make_request(:get, 'orders', store_id: store_id, filters: filters)
+    make_request(
+      :get,
+      'orders',
+      params: { store_id: store_id, filters: filters }
+    )
   end
 
   def send_return_confirmation_code(order_id:)
@@ -127,7 +162,7 @@ class Revo::LoansApi::Client
         store_id: store_id
       }
     }
-    make_request(:post, 'returns', params)
+    make_request(:post, 'returns', params: params)
   end
 
   def confirm_return(return_id:)
@@ -139,21 +174,31 @@ class Revo::LoansApi::Client
   end
 
   def start_self_registration(token:, mobile_phone:, skip_message: false)
-    make_request(:post, "loan_requests/#{token}/client/self_registration",
-                 mobile_phone: mobile_phone, skip_message: skip_message)
+    make_request(
+      :post,
+      "loan_requests/#{token}/client/self_registration",
+      params: { mobile_phone: mobile_phone, skip_message: skip_message }
+    )
   end
 
   def check_client_code(token:, code:)
-    make_request(:post, "loan_requests/#{token}/client/check_code", code: code)
+    make_request(
+      :post,
+      "loan_requests/#{token}/client/check_code",
+      params: { code: code }
+    )
   end
 
   def create_client(token:, client_params:, provider_data: {})
-    make_request(:post, "loan_requests/#{token}/client",
-                 client: client_params, provider_data: provider_data)
+    make_request(
+      :post,
+      "loan_requests/#{token}/client",
+      params: { client: client_params, provider_data: provider_data }
+    )
   end
 
   def update_client(id:, client_params:)
-    make_request(:patch, "clients/#{id}", client: client_params)
+    make_request(:patch, "clients/#{id}", params: { client: client_params })
   end
 
   def get_client(guid:)
@@ -161,11 +206,21 @@ class Revo::LoansApi::Client
   end
 
   def create_virtual_card(token:, term_id:)
-    make_request(:post, "loan_requests/#{token}/virtual_card", term_id: term_id)
+    make_request(
+      :post,
+      "loan_requests/#{token}/virtual_card",
+      params: { term_id: term_id },
+      headers: { 'Application-Source': application_source }
+    )
   end
 
   def create_card_loan(token:, term_id:)
-    make_request(:post, "loan_requests/#{token}/card_loan", term_id: term_id)
+    make_request(
+      :post,
+      "loan_requests/#{token}/card_loan",
+      params: { term_id: term_id },
+      headers: { 'Application-Source': application_source }
+    )
   end
 
   def send_billing_shift_confirmation_code(client_id:)
@@ -177,12 +232,19 @@ class Revo::LoansApi::Client
   end
 
   def confirm_billing_shift(client_id:, code:, billing_chain:)
-    make_request(:post, "clients/#{client_id}/billing_shift/confirmation",
-                 code: code, billing_chain: billing_chain)
+    make_request(
+      :post,
+      "clients/#{client_id}/billing_shift/confirmation",
+      params: { code: code, billing_chain: billing_chain }
+    )
   end
 
   def increase_client_limit(client_id:, amount:)
-    make_request(:patch, "clients/#{client_id}/limit", amount: amount)
+    make_request(
+      :patch,
+      "clients/#{client_id}/limit",
+      params: { amount: amount }
+    )
   end
 
   def client_loan_documents(client_id:, loan_application_id:)
@@ -194,14 +256,18 @@ class Revo::LoansApi::Client
   end
 
   def update_client_additional_services(client_id:, additional_services:)
-    make_request(:patch, "clients/#{client_id}/additional_services", additional_services)
+    make_request(
+      :patch,
+      "clients/#{client_id}/additional_services",
+      params: additional_services
+    )
   end
 
   private
 
   API_CONTENT_TYPE = 'application/json'.freeze
 
-  attr_reader :base_url, :login, :password
+  attr_reader :base_url, :login, :password, :application_source
 
   def connection
     @connection ||= HTTP.persistent(base_url)
@@ -214,9 +280,14 @@ class Revo::LoansApi::Client
     Result.new(success?: false, response: { errors: { base: [:cant_fetch_loan_request_terms] } })
   end
 
-  def make_request(method, endpoint, params = {}, &block)
-    headers = { Authorization: session_token }.compact
-    response = connection.public_send(method, url_for(endpoint), json: params, headers: headers)
+  def make_request(method, endpoint, params: {}, headers: {}, &block)
+    headers = { 'Authorization': session_token }.merge(headers).compact
+    response = connection.public_send(
+      method,
+      url_for(endpoint),
+      json: params,
+      headers: headers
+    )
     handle_response(response, &block)
   rescue HTTP::Error => e
     handle_error(e)

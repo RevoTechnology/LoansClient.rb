@@ -1,4 +1,27 @@
 RSpec.describe Revo::LoansApi::Client do
+  shared_examples 'sends Application-Source header to loan creation method' do
+    it do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'some-session-token',
+        application_source: 'source'
+      }
+      client = described_class.new(config)
+
+      connection_double = stub_connection(:post)
+      client.create_loan(token: 'some-lr-token', term_id: 51)
+
+      expect(connection_double)
+        .to have_received(:post)
+        .with(
+          anything,
+          hash_including(
+            headers: hash_including('Application-Source': 'source')
+          )
+        )
+    end
+  end
+
   describe 'session creation' do
     it 'returns a session token' do
       config = {
@@ -543,6 +566,8 @@ RSpec.describe Revo::LoansApi::Client do
         response: nil
       )
     end
+
+    it_behaves_like 'sends Application-Source header to loan creation method'
 
     context 'when something is invalid' do
       it 'returns a list of errors' do
@@ -1131,6 +1156,8 @@ RSpec.describe Revo::LoansApi::Client do
       )
     end
 
+    it_behaves_like 'sends Application-Source header to loan creation method'
+
     it 'returns unprocessible response' do
       config = {
         base_url: 'https://revoup.ru/api/loans/v1',
@@ -1170,6 +1197,8 @@ RSpec.describe Revo::LoansApi::Client do
         response: nil
       )
     end
+
+    it_behaves_like 'sends Application-Source header to loan creation method'
 
     it 'returns unprocessible response' do
       config = {
@@ -1427,5 +1456,19 @@ RSpec.describe Revo::LoansApi::Client do
         response: { sms_info: true }
       )
     end
+  end
+
+  private
+
+  def stub_connection(method)
+    status_double = instance_double('HTTP::Response::Status', success?: true)
+    response_double = instance_double(
+      'HTTP::Response',
+      status: status_double,
+      body: ''
+    )
+    connection_double = instance_double('HTTP::Client', method => response_double)
+    allow(HTTP).to receive(:persistent).and_return(connection_double)
+    connection_double
   end
 end
