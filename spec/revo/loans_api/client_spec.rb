@@ -439,9 +439,9 @@ RSpec.describe Revo::LoansApi::Client do
           client.get_loan_request_attributes(token: 'some-lr-token')
         end
 
-        expect(response).to eq(
-          amount: 1000.0,
-          prepayment_amount: 0.0
+        expect(response).to have_attributes(
+          success?: true,
+          response: { amount: 1000.0, prepayment_amount: 0.0 }
         )
       end
     end

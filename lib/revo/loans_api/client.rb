@@ -85,8 +85,12 @@ class Revo::LoansApi::Client
 
   def get_loan_request_attributes(token:)
     result = make_request(:get, "loan_requests/#{token}")
+    return result unless result.success?
 
-    result.success? ? result.response[:loan_request_attributes] : []
+    Result.new(
+      success?: true,
+      response: result.response[:loan_request_attributes]
+    )
   end
 
   # prerequisite: a client with the LR's phone number should already exist
