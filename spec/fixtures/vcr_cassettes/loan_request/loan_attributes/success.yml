@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://revoup.ru/api/loans/v1/loan_requests/some-lr-token
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Authorization:
+      - some-session-token
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Frame-Options:
+      - ALLOWALL
+      Etag:
+      - W/"e92f06324f933cb548585b3a4ebd9823"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - '08c203af-9d71-47f1-a3c4-7bc384451e0c'
+      - 5c13e7e6aa9a087387018b07dea37c7a
+      X-Runtime:
+      - '0.236320'
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: '{"loan_request_attributes":{"amount":1000.0,"prepayment_amount":0.0}}'
+    http_version:
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0
+

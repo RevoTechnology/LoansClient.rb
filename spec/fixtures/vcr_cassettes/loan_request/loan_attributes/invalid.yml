@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://revoup.ru/api/loans/v1/loan_requests/some-lr-token
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Authorization:
+      - some-session-token
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 422 Unprocessable Entity
+      X-Frame-Options:
+      - ALLOWALL
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 6f7e2c1d-ccc8-4da5-85a4-9dd0b519ac07
+      - 79aeac1da426a722a6dded513f76dc76
+      X-Runtime:
+      - '0.046503'
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: '{"errors":{"amount":["имеет неверное значение"]}}'
+    http_version:
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0
