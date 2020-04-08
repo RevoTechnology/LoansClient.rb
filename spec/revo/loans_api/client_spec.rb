@@ -1208,7 +1208,11 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       result = VCR.use_cassette('virtual_card/success') do
-        client.create_virtual_card(token: '3440d32b95406a78340fb9bd146f4cf2ef702ea3', term_id: 1)
+        client.create_virtual_card(
+          token: '3440d32b95406a78340fb9bd146f4cf2ef702ea3',
+          term_id: 1,
+          force_approve: true
+        )
       end
 
       expect(result).to have_attributes(
