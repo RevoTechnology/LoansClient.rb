@@ -215,11 +215,11 @@ class Revo::LoansApi::Client
     make_request(:get, "clients/#{guid}")
   end
 
-  def create_virtual_card(token:, term_id:)
+  def create_virtual_card(token:, term_id:, force_approve: false)
     make_request(
       :post,
       "loan_requests/#{token}/virtual_card",
-      params: { term_id: term_id },
+      params: { term_id: term_id, force_approve: force_approve },
       headers: { 'Application-Source': application_source }
     )
   end
