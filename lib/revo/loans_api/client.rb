@@ -199,11 +199,12 @@ class Revo::LoansApi::Client
     )
   end
 
-  def create_client(token:, client_params:, provider_data: {})
+  def create_client(token:, client_params:, provider_data: {}, skip_email_confirmation: false)
     make_request(
       :post,
       "loan_requests/#{token}/client",
-      params: { client: client_params, provider_data: provider_data }
+      params: { client: client_params, provider_data: provider_data,
+                skip_email_confirmation: skip_email_confirmation }
     )
   end
 
