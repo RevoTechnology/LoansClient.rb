@@ -258,6 +258,10 @@ class Revo::LoansApi::Client
     )
   end
 
+  def get_client_limit(client_id:)
+    make_request(:get, "clients/#{client_id}/limit")
+  end
+
   def client_loan_documents(client_id:, loan_application_id:)
     make_request(:get, "clients/#{client_id}/loans/#{loan_application_id}")
   end
