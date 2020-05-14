@@ -225,11 +225,11 @@ class Revo::LoansApi::Client
     )
   end
 
-  def create_card_loan(token:, term_id:)
+  def create_card_loan(token:, term_id:, force_approve: false)
     make_request(
       :post,
       "loan_requests/#{token}/card_loan",
-      params: { term_id: term_id },
+      params: { term_id: term_id, force_approve: force_approve },
       headers: { 'Application-Source': application_source }
     )
   end
