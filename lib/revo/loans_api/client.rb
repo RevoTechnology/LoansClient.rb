@@ -250,6 +250,22 @@ class Revo::LoansApi::Client
     )
   end
 
+  def send_restructuring_confirmation_code(client_id:, product:)
+    make_request(:post, "clients/#{client_id}/restructuring/#{product}")
+  end
+
+  def restructuring_info(client_id:, product:)
+    make_request(:get, "clients/#{client_id}/restructuring/#{product}/info")
+  end
+
+  def confirm_restructuring(client_id:, code:, product:)
+    make_request(
+      :post,
+      "clients/#{client_id}/restructuring/#{product}/confirmation",
+      params: { code: code }
+    )
+  end
+
   def increase_client_limit(client_id:, amount:)
     make_request(
       :patch,
