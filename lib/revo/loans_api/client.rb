@@ -250,18 +250,18 @@ class Revo::LoansApi::Client
     )
   end
 
-  def send_restructuring_confirmation_code(client_id:, product:)
-    make_request(:post, "clients/#{client_id}/restructuring/#{product}")
+  def send_restructuring_confirmation_code(client_id:)
+    make_request(:post, "clients/#{client_id}/restructuring/billing_shift")
   end
 
-  def restructuring_info(client_id:, product:)
-    make_request(:get, "clients/#{client_id}/restructuring/#{product}/info")
+  def restructuring_info(client_id:)
+    make_request(:get, "clients/#{client_id}/restructuring/billing_shift/info")
   end
 
-  def confirm_restructuring(client_id:, code:, product:)
+  def confirm_restructuring(client_id:, code:)
     make_request(
       :post,
-      "clients/#{client_id}/restructuring/#{product}/confirmation",
+      "clients/#{client_id}/restructuring/billing_shift/confirmation",
       params: { code: code }
     )
   end
