@@ -266,6 +266,13 @@ class Revo::LoansApi::Client
     )
   end
 
+  def restructuring_document(client_id:, product:, format: 'pdf')
+    make_request(
+      :get,
+      "clients/#{client_id}/restructuring/#{product}/document.#{format}"
+    )
+  end
+
   def increase_client_limit(client_id:, amount:)
     make_request(
       :patch,
