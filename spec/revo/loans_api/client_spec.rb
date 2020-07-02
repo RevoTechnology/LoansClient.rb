@@ -73,7 +73,10 @@ RSpec.describe Revo::LoansApi::Client do
 
         expect(result).to have_attributes(
           success?: false,
-          response: { errors: { base: [:unexpected_response] } }
+          response: {
+            errors: { base: [:unexpected_response] },
+            raw_response: anything
+          }
         )
       end
     end
@@ -1322,7 +1325,8 @@ RSpec.describe Revo::LoansApi::Client do
         response: {
           errors: {
             base: [:unexpected_response]
-          }
+          },
+          raw_response: match(/301 Moved Permanently/)
         }
       )
     end
@@ -1366,7 +1370,8 @@ RSpec.describe Revo::LoansApi::Client do
         response: {
           errors: {
             base: [:unexpected_response]
-          }
+          },
+          raw_response: match(/301 Moved Permanently/)
         }
       )
     end
@@ -1406,7 +1411,8 @@ RSpec.describe Revo::LoansApi::Client do
         response: {
           errors: {
             base: [:unexpected_response]
-          }
+          },
+          raw_response: match(/301 Moved Permanently/)
         }
       )
     end
