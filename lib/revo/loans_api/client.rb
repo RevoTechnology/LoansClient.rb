@@ -367,7 +367,10 @@ class Revo::LoansApi::Client
     if response.content_type.mime_type == API_CONTENT_TYPE
       parse(response)
     else
-      { errors: { base: [:unexpected_response] } }
+      {
+        errors: { base: [:unexpected_response] },
+        raw_response: response.to_s.presence
+      }
     end
   end
 
