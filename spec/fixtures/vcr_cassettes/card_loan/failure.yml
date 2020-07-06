@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://revoup.ru/api/loans/v1/loan_requests/3440d32b95406a78340fb9bd146f4cf2ef702ea3/card_loan
+    uri: https://revoup.ru/api/loans/v1/loan_requests/3440d32b95406a78340fb9bd146f4cf2ef702ea3/virtual_card_loan
     body:
       encoding: UTF-8
       string: '{"term_id":123}'
