@@ -217,10 +217,7 @@ class Revo::LoansApi::Client
   end
 
   def get_client_info(guid:)
-    make_request(
-      :get,
-      "clients/#{guid}/informers"
-    )
+    make_request(:get, "clients/#{guid}/informers")
   end
 
   def create_virtual_card(token:, term_id:, force_approve: false)

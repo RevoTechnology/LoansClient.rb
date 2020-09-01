@@ -1182,6 +1182,37 @@ RSpec.describe Revo::LoansApi::Client do
       )
     end
 
+    describe 'get client info' do
+      it 'returns success response' do
+        config = {
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'f90f00aed176c1661f56'
+        }
+        client = described_class.new(config)
+  
+        result = VCR.use_cassette('client/informers/success') do
+          client.get_client_info(guid: '738796032')
+        end
+  
+        expect(result).to have_attributes(
+          success?: true,
+          response: {
+            client: {
+              address_street_actual: 'г. Урюпинск, ул. Ленина, д. 13',
+              age: '38',
+              birth_date: '1981-11-11',
+              documents: { asp: 'http://asp_url' },
+              email: 'zzz2221zzzzz@zzz.zzz',
+              gender: 'male',
+              name: 'Иван',
+              surname: 'Иванов',
+              personal_identification: '',
+              phone_number: '9999999999'
+            }
+          }
+        )
+      end
+
     context 'when invalid guid' do
       it 'returns error' do
         config = {
