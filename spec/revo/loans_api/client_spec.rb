@@ -1184,13 +1184,9 @@ RSpec.describe Revo::LoansApi::Client do
 
     describe 'get client info' do
       it 'returns success response' do
-        # config = {
-        #   base_url: 'https://revoup.ru/api/loans/v1',
-        #   session_token: 'f90f00aed176c1661f56'
-        # }
         config = {
-          base_url: 'https://backend.st.revoup.ru/api/loans/v1',
-          session_token: 'a7f40a9a2a782caeb861'
+          base_url: 'https://revoup.ru/api/loans/v1',
+          session_token: 'f90f00aed176c1661f56'
         }
         client = described_class.new(config)
   
