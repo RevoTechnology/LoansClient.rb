@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: patch
-    uri: https://revoup.ru/api/loans/v1//clients/18141
+    uri: https://revoup.ru/api/loans/v1/clients/18141
     body:
       encoding: UTF-8
       string: '{"client":{"mobile_phone":"8882223344","email":"userfakeemail@example.com"}}'
