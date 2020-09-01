@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://revoup.ru/api/loans/v1//clients/invalid_guid
+    uri: https://revoup.ru/api/loans/v1/clients/invalid_guid
     headers:
       Authorization:
       - f90f00aed176c1661f56
