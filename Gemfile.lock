@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    revo-loans_api (0.0.32)
+    revo-loans_api (0.0.33)
       activesupport
       http
 

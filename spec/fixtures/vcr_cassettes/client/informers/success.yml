@@ -1,55 +1,56 @@
 ---
 http_interactions:
-- request:
-    method: get
-    uri: https://backend.st.revoup.ru/api/loans/v1/clients/868936372/informers
-    body:
-      encoding: UTF-8
-      string: "{}"
-    headers:
-      Authorization:
-      - a7f40a9a2a782caeb861
-      Connection:
-      - Keep-Alive
-      Content-Type:
-      - application/json; charset=UTF-8
-      Host:
-      - backend.st.revoup.ru
-      User-Agent:
-      - http.rb/4.4.1
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx
-      Date:
-      - Tue, 01 Sep 2020 12:55:56 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      X-Frame-Options:
-      - ALLOWALL
-      Etag:
-      - W/"20e1b728641cb51c9b7bbc424f596f45"
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      X-Request-Id:
-      - 0d5b35a2068199b728e7605ee4eeb859
-      - 2688dad6-3671-409d-b6b9-5d6b2b7297b2
-      X-Runtime:
-      - '0.048900'
-      Vary:
-      - Origin
-    body:
-      encoding: UTF-8
-      string: '{"client":{"address_street_actual":"areaTest, Test, streetTest, д.
-        1","age":77,"birth_date":"1942-12-01","documents":{"credit_facility_agreement":"http://s3-01.st.revoup.ru/staging/data/credit_facility_agreement/2020/5/13/15/14_1ae241081fe825621550691f56fe0963/2020_05_13_15_14_1ae241081fe825621550691f56fe0963_credit_facility_agreement.pdf?X-Amz-Expires=180&X-Amz-Date=20200901T125556Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=tcTtR3exMLVLGZa8i5ph8sAvEgVQwXs%2F20200901%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=133003c41336dab1145b3230fd556218e86f6ae2ab27ab491c53928986ce9be7"},"email":"a.badenkov+8881214455@revo.ru","gender":"","name":"Антон","personal_identification":"4212
-        530447","phone_number":"8881214455","surname":"Муравьевтест"}}'
-    http_version: 
-  recorded_at: Tue, 01 Sep 2020 12:55:56 GMT
+  - request:
+      method: get
+      uri: https://revoup.ru/api/loans/v1/clients/868936372/informers
+      body:
+        encoding: UTF-8
+        string: "{}"
+      headers:
+        Authorization:
+          - f90f00aed176c1661f56
+        Connection:
+          - Keep-Alive
+        Content-Type:
+          - application/json; charset=UTF-8
+        Host:
+          - revoup.ru
+        User-Agent:
+          - http.rb/4.4.1
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Server:
+          - nginx
+        Date:
+          - Tue, 01 Sep 2020 12:55:56 GMT
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        X-Frame-Options:
+          - ALLOWALL
+        Etag:
+          - W/"20e1b728641cb51c9b7bbc424f596f45"
+        Cache-Control:
+          - max-age=0, private, must-revalidate
+        X-Request-Id:
+          - 0d5b35a2068199b728e7605ee4eeb859
+          - 2688dad6-3671-409d-b6b9-5d6b2b7297b2
+        X-Runtime:
+          - "0.048900"
+        Vary:
+          - Origin
+      body:
+        encoding: UTF-8
+        string:
+          '{"client":{"address_street_actual":"areaTest, Test, streetTest, д.
+          1","age":77,"birth_date":"1942-12-01","documents":{"credit_facility_agreement":"http://s3-01.st.revoup.ru/staging/data/credit_facility_agreement/2020/5/13/15/14_1ae241081fe825621550691f56fe0963/2020_05_13_15_14_1ae241081fe825621550691f56fe0963_credit_facility_agreement.pdf?X-Amz-Expires=180&X-Amz-Date=20200901T125556Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=tcTtR3exMLVLGZa8i5ph8sAvEgVQwXs%2F20200901%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=133003c41336dab1145b3230fd556218e86f6ae2ab27ab491c53928986ce9be7"},"email":"a.badenkov+8881214455@revo.ru","gender":"","name":"Антон","personal_identification":"4212
+          530447","phone_number":"8881214455","surname":"Муравьевтест"}}'
+      http_version:
+    recorded_at: Tue, 01 Sep 2020 12:55:56 GMT
 recorded_with: VCR 5.0.0
