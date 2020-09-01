@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://revoup.ru/api/loans/v1//clients/738796032
+    uri: https://revoup.ru/api/loans/v1/clients/738796032
     headers:
       Authorization:
       - f90f00aed176c1661f56
