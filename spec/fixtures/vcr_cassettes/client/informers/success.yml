@@ -2,52 +2,54 @@
 http_interactions:
 - request:
     method: get
-    uri: https://revoup.ru/api/loans/v1//clients/738796032
+    uri: https://backend.st.revoup.ru/api/loans/v1/clients/868936372/informers
+    body:
+      encoding: UTF-8
+      string: "{}"
     headers:
       Authorization:
-      - f90f00aed176c1661f56
+      - a7f40a9a2a782caeb861
       Connection:
       - Keep-Alive
       Content-Type:
       - application/json; charset=UTF-8
       Host:
-      - revoup.ru
+      - backend.st.revoup.ru
       User-Agent:
-      - http.rb/4.2.0
+      - http.rb/4.4.1
   response:
     status:
       code: 200
       message: OK
     headers:
-      X-Frame-Options:
-      - ALLOWALL
+      Server:
+      - nginx
+      Date:
+      - Tue, 01 Sep 2020 12:55:56 GMT
       Content-Type:
       - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - ALLOWALL
+      Etag:
+      - W/"20e1b728641cb51c9b7bbc424f596f45"
       Cache-Control:
-      - no-store, must-revalidate, private, max-age=0
+      - max-age=0, private, must-revalidate
       X-Request-Id:
-      - ffb399f8-ebe1-48fe-b237-7d2cba8616d4
+      - 0d5b35a2068199b728e7605ee4eeb859
+      - 2688dad6-3671-409d-b6b9-5d6b2b7297b2
       X-Runtime:
-      - '0.613716'
+      - '0.048900'
       Vary:
       - Origin
-      X-Miniprofiler-Original-Cache-Control:
-      - max-age=0, private, must-revalidate
-      X-Miniprofiler-Ids:
-      - k0f18nt50fs37cmaoufz,df2u0rm09rm56ege04kc,pirlt0jxq8xw120n96jw,he7ttgyetjagtglijka1,yu2ztm02zcpcp3zkdnbz,ltl0hajnoyuzap7x2bkf,marya012ind6l0bzg0kw,llqbga4indb2z7exvodd,b2or5rkg4sngku2d2jcs,aozddp8mowpiw0ix10o8,e2wgzn2ek3ouq4zfx3dj,4v26n6lapkgw629otgg4,jtfs52d97wtqjtsqw4h5,a7um6xh9tnvbizt6f157,j9lp95av4locgg6vaenl,w22uh06u0j81j5d17399,h2llf4ab7gkwiypp4d98,bizl89cuidmz978pdmt8,9zvr379v6qa19sgqrnl6,xl63idlg1l1vlqfspzn4
-      Server:
-      - WEBrick/1.4.2 (Ruby/2.5.5/2019-03-15)
-      Date:
-      - Thu, 21 Nov 2019 10:06:30 GMT
-      Content-Length:
-      - '658'
-      Connection:
-      - Keep-Alive
-      Set-Cookie:
-      - __profilin=p%3Dt; path=/; HttpOnly
     body:
       encoding: UTF-8
-      string: '{"client":{"address_street_actual":"г. Урюпинск, ул. Ленина, д. 13","age":"38","birth_date":"1981-11-11","documents":{"asp":"http://asp_url"},"email":"zzz2221zzzzz@zzz.zzz","gender":"male","name":"Иван","surname":"Иванов","personal_identification":"","phone_number":"9999999999"}}'
-    http_version:
-  recorded_at: Fri, 29 Nov 2019 07:53:14 GMT
+      string: '{"client":{"address_street_actual":"areaTest, Test, streetTest, д.
+        1","age":77,"birth_date":"1942-12-01","documents":{"credit_facility_agreement":"http://s3-01.st.revoup.ru/staging/data/credit_facility_agreement/2020/5/13/15/14_1ae241081fe825621550691f56fe0963/2020_05_13_15_14_1ae241081fe825621550691f56fe0963_credit_facility_agreement.pdf?X-Amz-Expires=180&X-Amz-Date=20200901T125556Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=tcTtR3exMLVLGZa8i5ph8sAvEgVQwXs%2F20200901%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=133003c41336dab1145b3230fd556218e86f6ae2ab27ab491c53928986ce9be7"},"email":"a.badenkov+8881214455@revo.ru","gender":"","name":"Антон","personal_identification":"4212
+        530447","phone_number":"8881214455","surname":"Муравьевтест"}}'
+    http_version: 
+  recorded_at: Tue, 01 Sep 2020 12:55:56 GMT
 recorded_with: VCR 5.0.0

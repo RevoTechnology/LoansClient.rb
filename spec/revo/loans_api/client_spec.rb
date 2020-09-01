@@ -1184,34 +1184,41 @@ RSpec.describe Revo::LoansApi::Client do
 
     describe 'get client info' do
       it 'returns success response' do
+        # config = {
+        #   base_url: 'https://revoup.ru/api/loans/v1',
+        #   session_token: 'f90f00aed176c1661f56'
+        # }
         config = {
-          base_url: 'https://revoup.ru/api/loans/v1',
-          session_token: 'f90f00aed176c1661f56'
+          base_url: 'https://backend.st.revoup.ru/api/loans/v1',
+          session_token: 'a7f40a9a2a782caeb861'
         }
         client = described_class.new(config)
   
         result = VCR.use_cassette('client/informers/success') do
-          client.get_client_info(guid: '738796032')
+          client.get_client_info(guid: '868936372')
         end
-  
+
         expect(result).to have_attributes(
           success?: true,
           response: {
-            client: {
-              address_street_actual: 'г. Урюпинск, ул. Ленина, д. 13',
-              age: '38',
-              birth_date: '1981-11-11',
-              documents: { asp: 'http://asp_url' },
-              email: 'zzz2221zzzzz@zzz.zzz',
-              gender: 'male',
-              name: 'Иван',
-              surname: 'Иванов',
-              personal_identification: '',
-              phone_number: '9999999999'
+            :client => {
+              address_street_actual: 'areaTest, Test, streetTest, д. 1',
+              age: 77,
+              birth_date: '1942-12-01',
+              documents: {
+                credit_facility_agreement: 'http://s3-01.st.revoup.ru/staging/data/credit_facility_agreement/2020/5/13/15/14_1ae241081fe825621550691f56fe0963/2020_05_13_15_14_1ae241081fe825621550691f56fe0963_credit_facility_agreement.pdf?X-Amz-Expires=180&X-Amz-Date=20200901T125556Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=tcTtR3exMLVLGZa8i5ph8sAvEgVQwXs%2F20200901%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=133003c41336dab1145b3230fd556218e86f6ae2ab27ab491c53928986ce9be7'
+              },
+              email: 'a.badenkov+8881214455@revo.ru',
+              gender: '',
+              name: 'Антон',
+              personal_identification: '4212 530447',
+              phone_number: '8881214455',
+              surname: 'Муравьевтест'
             }
           }
         )
       end
+    end
 
     context 'when invalid guid' do
       it 'returns error' do
