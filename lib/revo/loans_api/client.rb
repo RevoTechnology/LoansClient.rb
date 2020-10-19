@@ -204,7 +204,8 @@ class Revo::LoansApi::Client
       :post,
       "loan_requests/#{token}/client",
       params: { client: client_params, provider_data: provider_data,
-                skip_email_confirmation: skip_email_confirmation }
+                skip_email_confirmation: skip_email_confirmation },
+      headers: { 'Application-Source': application_source }
     )
   end
 
