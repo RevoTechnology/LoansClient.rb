@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://revoup.ru/api/loans/v1/stores/94/documents/asp.pdf
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Authorization:
+      - some-session-token
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - revoup.ru
+      User-Agent:
+      - http.rb/4.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/pdf
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Frame-Options:
+      - ALLOWALL
+      Content-Disposition:
+      - 'attachment; filename="832_translation missing: ru.activerecord.attributes.offer_template.offer.pdf"'
+      Content-Transfer-Encoding:
+      - binary
+      Cache-Control:
+      - private
+      Etag:
+      - W/"bf73a3c594e8ecadac4019c3817e6f23"
+      X-Request-Id:
+      - 3dc0723918efbd4801e7a47fed3265e5
+      - d89e31ea-bffc-45a5-b918-7f087c1abb45
+      X-Runtime:
+      - '2.205805'
+      Vary:
+      - Origin
+    body:
+      encoding: ASCII-8BIT
+      string: 'PDF%1.6-some-content'
+    http_version: 
+  recorded_at: Thu, 01 Jan 1970 00:00:00 GMT
+recorded_with: VCR 5.0.0

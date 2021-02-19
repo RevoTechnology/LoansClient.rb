@@ -1563,6 +1563,25 @@ RSpec.describe Revo::LoansApi::Client do
     end
   end
 
+  describe 'store document fetching' do
+    it 'returns the raw document in a given format' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'some-session-token'
+      }
+      client = described_class.new(config)
+
+      document = VCR.use_cassette('stores/documents/success') do
+        client.store_document(store_id: 94, kind: :asp, format: :pdf)
+      end
+
+      expect(document).to have_attributes(
+        success?: true,
+        response: 'PDF%1.6-some-content'
+      )
+    end
+  end
+
   private
 
   def stub_connection(method)
