@@ -306,6 +306,13 @@ class Revo::LoansApi::Client
     )
   end
 
+  def store_document(store_id:, kind:, format: :pdf)
+    make_request(
+      :get,
+      "stores/#{store_id}/documents/#{kind}.#{format}"
+    )
+  end
+
   private
 
   API_CONTENT_TYPE = 'application/json'.freeze
