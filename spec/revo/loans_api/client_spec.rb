@@ -1582,6 +1582,25 @@ RSpec.describe Revo::LoansApi::Client do
     end
   end
 
+  describe 'loan application certificate getting' do
+    it 'returns success response' do
+      config = {
+        base_url: 'https://revoup.ru/api/loans/v1',
+        session_token: 'some-session-token'
+      }
+      client = described_class.new(config)
+
+      document = VCR.use_cassette('loan_application/certificate/success') do
+        client.get_loan_application_certificate(loan_application_id: 1, kind: :no_overdue_certificate)
+      end
+
+      expect(document).to have_attributes(
+        success?: true,
+        response: { data: 'lol' }
+      )
+    end
+  end
+
   private
 
   def stub_connection(method)
