@@ -313,9 +313,9 @@ class Revo::LoansApi::Client
     )
   end
 
-  def get_loan_application_certificate(loan_application_id:, kind:)
+  def certificate(loan_application_id:, kind:)
     make_request(
-      :get,
+      :post,
       "loan_applications/#{loan_application_id}/certificate",
       params: { kind: kind }
     )

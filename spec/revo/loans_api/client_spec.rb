@@ -1591,7 +1591,7 @@ RSpec.describe Revo::LoansApi::Client do
       client = described_class.new(config)
 
       document = VCR.use_cassette('loan_application/certificate/success') do
-        client.get_loan_application_certificate(loan_application_id: 1, kind: :no_overdue_certificate)
+        client.certificate(loan_application_id: 1, kind: :no_overdue_certificate)
       end
 
       expect(document).to have_attributes(

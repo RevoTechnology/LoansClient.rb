@@ -1,7 +1,7 @@
 ---
 http_interactions:
 - request:
-    method: get
+    method: post
     uri: https://revoup.ru/api/loans/v1/loan_applications/1/certificate
     body:
       encoding: UTF-8
